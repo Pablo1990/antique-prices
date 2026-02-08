@@ -82,7 +82,7 @@ class AssessmentService: ObservableObject {
         return mockItems
     }
     
-    private func calculatePriceEstimate(from items: [AntiqueItem.SimilarItem]) -> (average: Double, min: Double, max: Double) {
+    internal func calculatePriceEstimate(from items: [AntiqueItem.SimilarItem]) -> (average: Double, min: Double, max: Double) {
         guard !items.isEmpty else {
             return (average: 0, min: 0, max: 0)
         }
@@ -95,7 +95,7 @@ class AssessmentService: ObservableObject {
         return (average: average, min: min, max: max)
     }
     
-    private func determineAuthenticity(image: UIImage, similarItems: [AntiqueItem.SimilarItem]) async -> (isAuthentic: Bool, confidence: Double) {
+    internal func determineAuthenticity(image: UIImage, similarItems: [AntiqueItem.SimilarItem]) async -> (isAuthentic: Bool, confidence: Double) {
         // In a real implementation, this would use ML models to detect fakes
         // For now, using a simulated assessment
         
