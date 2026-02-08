@@ -1,0 +1,23 @@
+/* App Title and Description */
+"app_title" = "Tasador de Antigüedades";
+"app_description" = "Toma una foto de tu antigüedad y obtén una valoración basada en precios reales del mercado español";
+
+/* Buttons */
+"take_photo" = "Tomar Foto";
+"assess_antique" = "Evaluar Antigüedad";
+"done" = "Listo";
+
+/* Results View */
+"assessment_results" = "Resultados de Evaluación";
+"price_estimation" = "Estimación de Precio";
+"estimated_value" = "Valor Estimado:";
+"price_range" = "Rango de Precios:";
+"authenticity_check" = "Verificación de Autenticidad";
+"likely_authentic" = "Probablemente Auténtico";
+"possibly_fake" = "Posiblemente Falso";
+"period_assessment" = "Periodo Histórico";
+"similar_items" = "Artículos Similares en todocoleccion.net";
+"source_info" = "Fuente de datos:";
+
+/* Confidence */
+"confidence" = "Confianza";
