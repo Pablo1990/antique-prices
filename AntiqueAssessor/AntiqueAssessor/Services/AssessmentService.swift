@@ -41,40 +41,46 @@ class AssessmentService: ObservableObject {
             throw AssessmentError.imageProcessingFailed
         }
         
-        // Use Vision framework to classify the image
-        let observations = try await performImageClassification(cgImage: cgImage)
-        
-        // Extract top classifications to build search query
-        let topClassifications = observations.prefix(3).map { $0.identifier }
-        
-        // Build a search-friendly description from classifications
+        // Try to use Vision framework to classify the image
+        // If Vision fails (e.g., espresso context error), fall back to generic search
         var searchTerms: [String] = []
         
-        // Map common Vision classifications to Spanish antique categories
-        for classification in topClassifications {
-            let lowercased = classification.lowercased()
+        do {
+            let observations = try await performImageClassification(cgImage: cgImage)
             
-            // Common antique categories
-            if lowercased.contains("coin") || lowercased.contains("money") {
-                searchTerms.append("moneda antigua")
-            } else if lowercased.contains("furniture") || lowercased.contains("chair") || lowercased.contains("table") {
-                searchTerms.append("mueble antiguo")
-            } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") {
-                searchTerms.append("cerámica antigua")
-            } else if lowercased.contains("painting") || lowercased.contains("art") {
-                searchTerms.append("pintura antigua")
-            } else if lowercased.contains("jewelry") || lowercased.contains("ring") || lowercased.contains("necklace") {
-                searchTerms.append("joya antigua")
-            } else if lowercased.contains("book") {
-                searchTerms.append("libro antiguo")
-            } else if lowercased.contains("watch") || lowercased.contains("clock") {
-                searchTerms.append("reloj antiguo")
-            } else if lowercased.contains("toy") {
-                searchTerms.append("juguete antiguo")
+            // Extract top classifications to build search query
+            let topClassifications = observations.prefix(3).map { $0.identifier }
+            
+            // Map common Vision classifications to Spanish antique categories
+            for classification in topClassifications {
+                let lowercased = classification.lowercased()
+                
+                // Common antique categories
+                if lowercased.contains("coin") || lowercased.contains("money") {
+                    searchTerms.append("moneda antigua")
+                } else if lowercased.contains("furniture") || lowercased.contains("chair") || lowercased.contains("table") {
+                    searchTerms.append("mueble antiguo")
+                } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") {
+                    searchTerms.append("cerámica antigua")
+                } else if lowercased.contains("painting") || lowercased.contains("art") {
+                    searchTerms.append("pintura antigua")
+                } else if lowercased.contains("jewelry") || lowercased.contains("ring") || lowercased.contains("necklace") {
+                    searchTerms.append("joya antigua")
+                } else if lowercased.contains("book") {
+                    searchTerms.append("libro antiguo")
+                } else if lowercased.contains("watch") || lowercased.contains("clock") {
+                    searchTerms.append("reloj antiguo")
+                } else if lowercased.contains("toy") {
+                    searchTerms.append("juguete antiguo")
+                }
             }
+        } catch {
+            // Vision framework failed (e.g., espresso context not available)
+            // Log the error but continue with fallback search terms
+            print("Vision framework unavailable, using generic search terms: \(error.localizedDescription)")
         }
         
-        // If no specific category matched, use generic terms
+        // If no specific category matched or Vision failed, use generic terms
         if searchTerms.isEmpty {
             searchTerms = ["antigüedad", "colección"]
         }
