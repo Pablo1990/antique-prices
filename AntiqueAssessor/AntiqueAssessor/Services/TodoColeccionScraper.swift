@@ -9,8 +9,11 @@ class TodoColeccionScraper {
     /// - Parameter query: Search query (e.g., "antigüedad", "moneda antigua")
     /// - Returns: Array of scraped items with name, price, and URL
     func searchAntiques(query: String) async throws -> [ScrapedItem] {
-        // URL encode the query
-        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+        // URL encode the query - create allowed character set without / to prevent path issues
+        var allowedCharacters = CharacterSet.urlPathAllowed
+        allowedCharacters.remove(charactersIn: "/")
+        
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: allowedCharacters) else {
             throw ScraperError.invalidQuery
         }
         
@@ -205,6 +208,8 @@ class TodoColeccionScraper {
                 match = match.replacingOccurrences(of: "<", with: "")
                 match = match.replacingOccurrences(of: "\"", with: "")
                 match = match.replacingOccurrences(of: "'", with: "")
+                // Remove trailing slash that may remain from the >...</ pattern
+                match = match.replacingOccurrences(of: "/", with: "")
                 match = match.trimmingCharacters(in: .whitespacesAndNewlines)
                 
                 // Only accept if it looks like a meaningful title
@@ -313,17 +318,17 @@ class TodoColeccionScraper {
         var errorDescription: String? {
             switch self {
             case .invalidQuery:
-                return "Invalid search query"
+                return NSLocalizedString("scraper_invalid_query", comment: "Invalid search query error")
             case .invalidURL:
-                return "Invalid URL format"
+                return NSLocalizedString("scraper_invalid_url", comment: "Invalid URL format error")
             case .invalidResponse:
-                return "Invalid server response"
+                return NSLocalizedString("invalid_response", comment: "Invalid server response error")
             case .invalidEncoding:
-                return "Unable to parse response encoding"
+                return NSLocalizedString("scraper_invalid_encoding", comment: "Unable to parse response encoding error")
             case .httpError(let code):
-                return "HTTP error: \(code)"
+                return String(format: NSLocalizedString("scraper_http_error", comment: "HTTP error with code"), code)
             case .noItemsFound:
-                return "No items found matching the search"
+                return NSLocalizedString("scraper_no_items_found", comment: "No items found matching the search")
             }
         }
     }

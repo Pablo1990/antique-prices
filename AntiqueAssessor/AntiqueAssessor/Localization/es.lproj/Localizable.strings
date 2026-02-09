@@ -33,3 +33,10 @@
 "invalid_api_key" = "Clave de API inválida";
 "search_in_progress" = "Buscando artículos similares...";
 
+/* Scraper Error Messages */
+"scraper_invalid_query" = "Consulta de búsqueda inválida";
+"scraper_invalid_url" = "Formato de URL inválido";
+"scraper_invalid_encoding" = "No se pudo analizar la codificación de la respuesta";
+"scraper_http_error" = "Error HTTP: %d";
+"scraper_no_items_found" = "No se encontraron artículos que coincidan con la búsqueda";
+

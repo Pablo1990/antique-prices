@@ -33,3 +33,10 @@
 "invalid_api_key" = "Invalid API key";
 "search_in_progress" = "Searching for similar items...";
 
+/* Scraper Error Messages */
+"scraper_invalid_query" = "Invalid search query";
+"scraper_invalid_url" = "Invalid URL format";
+"scraper_invalid_encoding" = "Unable to parse response encoding";
+"scraper_http_error" = "HTTP error: %d";
+"scraper_no_items_found" = "No items found matching the search";
+

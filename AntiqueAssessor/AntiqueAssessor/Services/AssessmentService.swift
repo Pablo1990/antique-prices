@@ -137,8 +137,11 @@ class AssessmentService: ObservableObject {
             // If no items found, throw error
             throw AssessmentError.noSimilarItemsFound
             
+        } catch AssessmentError.noSimilarItemsFound {
+            // Propagate the "no similar items" condition to the caller
+            throw AssessmentError.noSimilarItemsFound
         } catch {
-            // If scraping fails, log the error and throw
+            // If scraping fails, log the error and throw a network error
             print("Error scraping TodoColección.net: \(error.localizedDescription)")
             throw AssessmentError.networkError
         }
