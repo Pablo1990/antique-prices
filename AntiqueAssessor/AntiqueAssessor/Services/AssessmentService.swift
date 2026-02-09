@@ -105,11 +105,9 @@ class AssessmentService: ObservableObject {
             }
             
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                continuation.resume(throwing: error)
-            }
+            // Perform the request - any errors will be reported to the completion handler
+            // Don't wrap in do-catch to avoid resuming continuation twice
+            try? handler.perform([request])
         }
     }
     
