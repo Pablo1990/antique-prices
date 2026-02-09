@@ -15,7 +15,7 @@
 		AA000001000000000000000B /* AntiqueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000C /* AntiqueItem.swift */; };
 		AA000001000000000000000D /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000E /* ResultsView.swift */; };
 		AA000001000000000000000F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000010 /* Localizable.strings */; };
-		AA0000010000000000000020 /* TodoColeccionScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000021 /* TodoColeccionScraper.swift */; };
+		AA0000010000000000000027 /* TodoColeccionScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000028 /* TodoColeccionScraper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 		AA0000010000000000000012 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0000010000000000000013 /* AntiqueAssessor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AntiqueAssessor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000010000000000000014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA0000010000000000000021 /* TodoColeccionScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColeccionScraper.swift; sourceTree = "<group>"; };
+		AA0000010000000000000028 /* TodoColeccionScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColeccionScraper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000001000000000000000A /* AssessmentService.swift */,
-				AA0000010000000000000021 /* TodoColeccionScraper.swift */,
+				AA0000010000000000000028 /* TodoColeccionScraper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -177,7 +177,7 @@
 				AA0000010000000000000009 /* AssessmentService.swift in Sources */,
 				AA000001000000000000000B /* AntiqueItem.swift in Sources */,
 				AA000001000000000000000D /* ResultsView.swift in Sources */,
-				AA0000010000000000000020 /* TodoColeccionScraper.swift in Sources */,
+				AA0000010000000000000027 /* TodoColeccionScraper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
