@@ -9,24 +9,28 @@ class TodoColeccionScraper {
     /// - Parameter query: Search query (e.g., "antigüedad", "moneda antigua")
     /// - Returns: Array of scraped items with name, price, and URL
     func searchAntiques(query: String) async throws -> [ScrapedItem] {
-        // URL encode the query - create allowed character set without / to prevent path issues
-        var allowedCharacters = CharacterSet.urlPathAllowed
-        allowedCharacters.remove(charactersIn: "/")
+        // URL encode the query - use urlQueryAllowed for query parameters
+        // Replace spaces with + as is common in search queries
+        let queryWithPlus = query.replacingOccurrences(of: " ", with: "+")
         
-        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: allowedCharacters) else {
+        guard let encodedQuery = queryWithPlus.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             throw ScraperError.invalidQuery
         }
         
-        // Construct search URL - todocoleccion.net uses /buscar/ for search
-        let searchURLString = "\(baseURL)/buscar/\(encodedQuery)"
+        // Construct search URL - todocoleccion.net uses /s/ for search
+        // Format: https://www.todocoleccion.net/s/query
+        let searchURLString = "\(baseURL)/s/\(encodedQuery)"
         guard let searchURL = URL(string: searchURLString) else {
             throw ScraperError.invalidURL
         }
+        
+        print("Searching TodoColección with URL: \(searchURLString)")
         
         // Create request with proper headers to mimic browser
         var request = URLRequest(url: searchURL)
         request.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15", forHTTPHeaderField: "User-Agent")
         request.setValue("text/html,application/xhtml+xml", forHTTPHeaderField: "Accept")
+        request.setValue("es-ES,es;q=0.9,en;q=0.8", forHTTPHeaderField: "Accept-Language")
         request.timeoutInterval = 30
         
         // Fetch the HTML
