@@ -21,3 +21,15 @@
 
 /* Confidence */
 "confidence" = "Confianza";
+
+/* Error Messages */
+"image_processing_error" = "Error al procesar la imagen";
+"network_error" = "Error de red";
+"no_similar_items" = "No se encontraron artículos similares";
+"invalid_response" = "Respuesta inválida del servidor";
+"authentication_required" = "Se requiere autenticación";
+"rate_limit_exceeded" = "Se excedió el límite de solicitudes";
+"service_unavailable" = "Servicio no disponible";
+"invalid_api_key" = "Clave de API inválida";
+"search_in_progress" = "Buscando artículos similares...";
+

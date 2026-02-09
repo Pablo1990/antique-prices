@@ -21,3 +21,15 @@
 
 /* Confidence */
 "confidence" = "Confidence";
+
+/* Error Messages */
+"image_processing_error" = "Error processing image";
+"network_error" = "Network error";
+"no_similar_items" = "No similar items found";
+"invalid_response" = "Invalid server response";
+"authentication_required" = "Authentication required";
+"rate_limit_exceeded" = "Rate limit exceeded";
+"service_unavailable" = "Service unavailable";
+"invalid_api_key" = "Invalid API key";
+"search_in_progress" = "Searching for similar items...";
+
