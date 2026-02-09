@@ -1,0 +1,23 @@
+/* App Title and Description */
+"app_title" = "Antique Assessor";
+"app_description" = "Take a photo of your antique and get a valuation based on real Spanish market prices";
+
+/* Buttons */
+"take_photo" = "Take Photo";
+"assess_antique" = "Assess Antique";
+"done" = "Done";
+
+/* Results View */
+"assessment_results" = "Assessment Results";
+"price_estimation" = "Price Estimation";
+"estimated_value" = "Estimated Value:";
+"price_range" = "Price Range:";
+"authenticity_check" = "Authenticity Check";
+"likely_authentic" = "Likely Authentic";
+"possibly_fake" = "Possibly Fake";
+"period_assessment" = "Historical Period";
+"similar_items" = "Similar Items on todocoleccion.net";
+"source_info" = "Data source:";
+
+/* Confidence */
+"confidence" = "Confidence";
