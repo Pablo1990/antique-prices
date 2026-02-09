@@ -6,12 +6,20 @@ struct AntiqueItem: Identifiable, Codable {
     let description: String
     let estimatedPrice: Double
     let priceRange: PriceRange
-    let isAuthentic: Bool
-    let authenticityConfidence: Double
-    let period: String
-    let periodConfidence: Double
-    let source: String
-    let similarItems: [SimilarItem]
+    
+    // User-provided data
+    let userProvidedPrices: UserProvidedPrices
+    let conditionAssessment: ConditionAssessment
+    
+    // Calculated factors
+    let conditionFactor: Double
+    let rarityFactor: Double
+    
+    // Image analysis results
+    let suggestedCategory: String
+    let suggestedKeywords: [String]
+    let analysisConfidence: Double
+    
     let assessmentDate: Date
     
     struct PriceRange: Codable {
@@ -19,35 +27,31 @@ struct AntiqueItem: Identifiable, Codable {
         let max: Double
     }
     
-    struct SimilarItem: Codable, Identifiable {
-        let id: UUID
-        let name: String
-        let price: Double
-        let url: String
-        
-        init(id: UUID = UUID(), name: String, price: Double, url: String) {
-            self.id = id
-            self.name = name
-            self.price = price
-            self.url = url
-        }
-    }
-    
-    init(id: UUID = UUID(), name: String, description: String, estimatedPrice: Double, 
-         priceRange: PriceRange, isAuthentic: Bool, authenticityConfidence: Double,
-         period: String, periodConfidence: Double, source: String, 
-         similarItems: [SimilarItem], assessmentDate: Date = Date()) {
+    init(id: UUID = UUID(),
+         name: String,
+         description: String,
+         estimatedPrice: Double,
+         priceRange: PriceRange,
+         userProvidedPrices: UserProvidedPrices,
+         conditionAssessment: ConditionAssessment,
+         conditionFactor: Double,
+         rarityFactor: Double,
+         suggestedCategory: String,
+         suggestedKeywords: [String],
+         analysisConfidence: Double,
+         assessmentDate: Date = Date()) {
         self.id = id
         self.name = name
         self.description = description
         self.estimatedPrice = estimatedPrice
         self.priceRange = priceRange
-        self.isAuthentic = isAuthentic
-        self.authenticityConfidence = authenticityConfidence
-        self.period = period
-        self.periodConfidence = periodConfidence
-        self.source = source
-        self.similarItems = similarItems
+        self.userProvidedPrices = userProvidedPrices
+        self.conditionAssessment = conditionAssessment
+        self.conditionFactor = conditionFactor
+        self.rarityFactor = rarityFactor
+        self.suggestedCategory = suggestedCategory
+        self.suggestedKeywords = suggestedKeywords
+        self.analysisConfidence = analysisConfidence
         self.assessmentDate = assessmentDate
     }
 }

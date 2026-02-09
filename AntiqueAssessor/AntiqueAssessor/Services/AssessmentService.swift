@@ -3,93 +3,86 @@ import Vision
 import CoreML
 
 class AssessmentService: ObservableObject {
-    private let baseURL = "https://www.todocoleccion.net"
     
-    func assessAntique(image: UIImage) async throws -> AntiqueItem {
-        // Analyze the image using Vision framework
-        let imageAnalysis = try await analyzeImage(image)
-        
-        // Search for similar items on todocoleccion.net
-        let similarItems = try await searchSimilarItems(description: imageAnalysis.description)
-        
-        // Calculate price estimation based on similar items
-        let priceEstimate = calculatePriceEstimate(from: similarItems)
-        
-        // Determine authenticity using ML models and comparison
-        let authenticityResult = await determineAuthenticity(image: image, similarItems: similarItems)
-        
-        // Determine period/era
-        let periodResult = await determinePeriod(image: image, description: imageAnalysis.description)
-        
-        return AntiqueItem(
-            name: imageAnalysis.name,
-            description: imageAnalysis.description,
-            estimatedPrice: priceEstimate.average,
-            priceRange: AntiqueItem.PriceRange(min: priceEstimate.min, max: priceEstimate.max),
-            isAuthentic: authenticityResult.isAuthentic,
-            authenticityConfidence: authenticityResult.confidence,
-            period: periodResult.period,
-            periodConfidence: periodResult.confidence,
-            source: baseURL,
-            similarItems: similarItems
-        )
-    }
-    
-    private func analyzeImage(_ image: UIImage) async throws -> (name: String, description: String) {
-        // Use Vision framework for image recognition
+    /// Analyze image using Vision framework to generate search keywords
+    /// Returns suggestions for category and keywords, but does NOT fetch any data
+    func analyzeImage(_ image: UIImage) async throws -> ImageAnalysisResult {
         guard let cgImage = image.cgImage else {
             throw AssessmentError.imageProcessingFailed
         }
         
         // Try to use Vision framework to classify the image
-        // If Vision fails (e.g., espresso context error), fall back to generic search
-        var searchTerms: [String] = []
+        var suggestedCategory = "antigüedad"
+        var keywords: [String] = []
+        var eraKeywords: [String] = []
+        var confidence = 0.5
         
         do {
             let observations = try await performImageClassification(cgImage: cgImage)
             
             // Extract top classifications to build search query
-            let topClassifications = observations.prefix(3).map { $0.identifier }
+            let topClassifications = observations.prefix(5)
+            
+            // Get confidence from top observation
+            if let topObservation = topClassifications.first {
+                confidence = Double(topObservation.confidence)
+            }
             
             // Map common Vision classifications to Spanish antique categories
-            for classification in topClassifications {
-                let lowercased = classification.lowercased()
+            for observation in topClassifications {
+                let lowercased = observation.identifier.lowercased()
                 
                 // Common antique categories
                 if lowercased.contains("coin") || lowercased.contains("money") {
-                    searchTerms.append("moneda antigua")
+                    suggestedCategory = "moneda antigua"
+                    keywords.append("numismática")
                 } else if lowercased.contains("furniture") || lowercased.contains("chair") || lowercased.contains("table") {
-                    searchTerms.append("mueble antiguo")
-                } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") {
-                    searchTerms.append("cerámica antigua")
+                    suggestedCategory = "mueble antiguo"
+                    keywords.append("mobiliario")
+                } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") || lowercased.contains("ceramic") {
+                    suggestedCategory = "cerámica antigua"
+                    keywords.append("porcelana")
                 } else if lowercased.contains("painting") || lowercased.contains("art") {
-                    searchTerms.append("pintura antigua")
+                    suggestedCategory = "pintura antigua"
+                    keywords.append("arte")
                 } else if lowercased.contains("jewelry") || lowercased.contains("ring") || lowercased.contains("necklace") {
-                    searchTerms.append("joya antigua")
+                    suggestedCategory = "joya antigua"
+                    keywords.append("bisutería")
                 } else if lowercased.contains("book") {
-                    searchTerms.append("libro antiguo")
+                    suggestedCategory = "libro antiguo"
+                    keywords.append("bibliofilia")
                 } else if lowercased.contains("watch") || lowercased.contains("clock") {
-                    searchTerms.append("reloj antiguo")
+                    suggestedCategory = "reloj antiguo"
+                    keywords.append("relojería")
                 } else if lowercased.contains("toy") {
-                    searchTerms.append("juguete antiguo")
+                    suggestedCategory = "juguete antiguo"
+                    keywords.append("colección")
+                } else if lowercased.contains("bottle") || lowercased.contains("glass") {
+                    keywords.append("cristal")
+                } else if lowercased.contains("metal") || lowercased.contains("bronze") || lowercased.contains("silver") {
+                    keywords.append("metal")
                 }
             }
+            
+            // Add generic era keywords for variety
+            eraKeywords = ["antiguo", "vintage", "colección"]
+            
         } catch {
-            // Vision framework failed (e.g., espresso context not available)
-            // Log the error but continue with fallback search terms
+            // Vision framework failed - use generic terms
             print("Vision framework unavailable, using generic search terms: \(error.localizedDescription)")
+            suggestedCategory = "antigüedad"
+            keywords = ["colección", "vintage"]
+            eraKeywords = ["antiguo"]
         }
         
-        // If no specific category matched or Vision failed, use generic terms
-        if searchTerms.isEmpty {
-            searchTerms = ["antigüedad", "colección"]
-        }
+        // Remove duplicates
+        keywords = Array(Set(keywords))
         
-        let searchQuery = searchTerms.joined(separator: " ")
-        
-        return (
-            name: "Objeto Antiguo",
-            description: searchQuery
+        return ImageAnalysisResult(
+            suggestedCategory: suggestedCategory,
+            suggestedKeywords: keywords,
+            eraStyleKeywords: eraKeywords,
+            confidence: confidence
         )
     }
     
@@ -111,95 +104,74 @@ class AssessmentService: ObservableObject {
             }
             
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-            // Perform the request - any errors will be reported to the completion handler
-            // Don't wrap in do-catch to avoid resuming continuation twice
             try? handler.perform([request])
         }
     }
     
-    private func searchSimilarItems(description: String) async throws -> [AntiqueItem.SimilarItem] {
-        // Use the TodoColeccionScraper to fetch real items
-        let scraper = TodoColeccionScraper()
+    /// Calculate final price estimate using user-provided data
+    /// Formula: estimated_price = user_median_price × condition_factor × rarity_factor
+    func calculatePriceEstimate(
+        userPrices: UserProvidedPrices,
+        condition: ConditionAssessment
+    ) -> AntiqueItem {
+        let conditionFactor = condition.conditionFactor
+        let rarityFactor = condition.rarityFactor
         
-        do {
-            let scrapedItems = try await scraper.searchAntiques(query: description)
-            
-            // Convert scraped items to SimilarItem format
-            let similarItems = scrapedItems.map { item in
-                AntiqueItem.SimilarItem(
-                    name: item.name,
-                    price: item.price,
-                    url: item.url
-                )
-            }
-            
-            // Return items if we found any
-            if !similarItems.isEmpty {
-                return similarItems
-            }
-            
-            // If no items found, throw error
-            throw AssessmentError.noSimilarItemsFound
-            
-        } catch AssessmentError.noSimilarItemsFound {
-            // Propagate the "no similar items" condition to the caller
-            throw AssessmentError.noSimilarItemsFound
-        } catch {
-            // If scraping fails, log the error and throw a network error
-            print("Error scraping TodoColección.net: \(error.localizedDescription)")
-            throw AssessmentError.networkError
-        }
+        // Calculate estimated price
+        let estimatedPrice = userPrices.medianPrice * conditionFactor * rarityFactor
+        
+        // Calculate adjusted price range
+        let minPrice = userPrices.minimumPrice * conditionFactor * rarityFactor
+        let maxPrice = userPrices.maximumPrice * conditionFactor * rarityFactor
+        
+        return AntiqueItem(
+            name: NSLocalizedString("antique_object", comment: ""),
+            description: NSLocalizedString("user_assessed_item", comment: ""),
+            estimatedPrice: estimatedPrice,
+            priceRange: AntiqueItem.PriceRange(min: minPrice, max: maxPrice),
+            userProvidedPrices: userPrices,
+            conditionAssessment: condition,
+            conditionFactor: conditionFactor,
+            rarityFactor: rarityFactor,
+            suggestedCategory: "",
+            suggestedKeywords: [],
+            analysisConfidence: 1.0
+        )
     }
     
-    internal func calculatePriceEstimate(from items: [AntiqueItem.SimilarItem]) -> (average: Double, min: Double, max: Double) {
-        guard !items.isEmpty else {
-            return (average: 0, min: 0, max: 0)
-        }
+    /// Create final assessment result combining image analysis and user data
+    func createFinalAssessment(
+        imageAnalysis: ImageAnalysisResult,
+        userPrices: UserProvidedPrices,
+        condition: ConditionAssessment
+    ) -> AntiqueItem {
+        let conditionFactor = condition.conditionFactor
+        let rarityFactor = condition.rarityFactor
         
-        let prices = items.map { $0.price }
-        let average = prices.reduce(0, +) / Double(prices.count)
-        let min = prices.min() ?? 0
-        let max = prices.max() ?? 0
+        // Calculate estimated price using the formula
+        let estimatedPrice = userPrices.medianPrice * conditionFactor * rarityFactor
         
-        return (average: average, min: min, max: max)
-    }
-    
-    internal func determineAuthenticity(image: UIImage, similarItems: [AntiqueItem.SimilarItem]) async -> (isAuthentic: Bool, confidence: Double) {
-        // In a real implementation, this would use ML models to detect fakes
-        // For now, using a simulated assessment
+        // Calculate adjusted price range
+        let minPrice = userPrices.minimumPrice * conditionFactor * rarityFactor
+        let maxPrice = userPrices.maximumPrice * conditionFactor * rarityFactor
         
-        // Simulate ML processing delay
-        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
-        
-        // Mock authenticity check based on image analysis
-        let confidence = Double.random(in: 0.75...0.95)
-        let isAuthentic = confidence > 0.80
-        
-        return (isAuthentic: isAuthentic, confidence: confidence)
-    }
-    
-    private func determinePeriod(image: UIImage, description: String) async -> (period: String, confidence: Double) {
-        // In a real implementation, this would use ML to identify time periods
-        // For now, returning mock period data
-        
-        let periods = [
-            "Siglo XIX (1800-1900)",
-            "Principios del Siglo XX (1900-1940)",
-            "Mediados del Siglo XX (1940-1970)",
-            "Arte Deco (1920-1939)",
-            "Época Victoriana (1837-1901)",
-            "Edad Moderna (1500-1800)"
-        ]
-        
-        let randomPeriod = periods.randomElement() ?? "Periodo desconocido"
-        let confidence = Double.random(in: 0.70...0.90)
-        
-        return (period: randomPeriod, confidence: confidence)
+        return AntiqueItem(
+            name: imageAnalysis.suggestedCategory.capitalized,
+            description: imageAnalysis.searchQuery,
+            estimatedPrice: estimatedPrice,
+            priceRange: AntiqueItem.PriceRange(min: minPrice, max: maxPrice),
+            userProvidedPrices: userPrices,
+            conditionAssessment: condition,
+            conditionFactor: conditionFactor,
+            rarityFactor: rarityFactor,
+            suggestedCategory: imageAnalysis.suggestedCategory,
+            suggestedKeywords: imageAnalysis.suggestedKeywords,
+            analysisConfidence: imageAnalysis.confidence
+        )
     }
     
     enum AssessmentError: Error {
         case imageProcessingFailed
-        case networkError
-        case noSimilarItemsFound
+        case missingUserData
     }
 }

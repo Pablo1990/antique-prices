@@ -1,23 +1,123 @@
 /* App Title and Description */
 "app_title" = "Tasador de Antigüedades";
 "app_description" = "Toma una foto de tu antigüedad y obtén una valoración basada en precios reales del mercado español";
+"app_description_new" = "Obtén valoraciones expertas con investigación de mercado asistida";
 
 /* Buttons */
 "take_photo" = "Tomar Foto";
 "assess_antique" = "Evaluar Antigüedad";
 "done" = "Listo";
+"cancel" = "Cancelar";
+"continue" = "Continuar";
+"ok" = "OK";
+"error" = "Error";
+"start_over" = "Empezar de Nuevo";
+
+/* Assessment Steps */
+"analyze_image" = "Analizar Imagen";
+"browse_market" = "Explorar Mercado";
+"enter_prices" = "Ingresar Precios";
+"rate_condition" = "Evaluar Condición";
+"view_results" = "Ver Resultados";
+"suggested_search_keywords" = "Búsqueda sugerida:";
 
 /* Results View */
 "assessment_results" = "Resultados de Evaluación";
 "price_estimation" = "Estimación de Precio";
 "estimated_value" = "Valor Estimado:";
 "price_range" = "Rango de Precios:";
-"authenticity_check" = "Verificación de Autenticidad";
-"likely_authentic" = "Probablemente Auténtico";
-"possibly_fake" = "Posiblemente Falso";
-"period_assessment" = "Periodo Histórico";
-"similar_items" = "Artículos Similares en todocoleccion.net";
-"source_info" = "Fuente de datos:";
+"adjusted_price_range" = "Rango Ajustado:";
+"calculation_breakdown" = "Desglose del Cálculo";
+"user_median_price" = "Tu Precio Mediano";
+"condition_factor" = "Factor de Condición";
+"rarity_factor" = "Factor de Rareza";
+"suggested_category" = "Categoría Sugerida";
+"keywords_used" = "Palabras Clave";
+
+/* User-Provided Data */
+"user_provided_prices" = "Observaciones del Mercado";
+"observed_minimum" = "Mínimo Observado:";
+"observed_median" = "Mediano Observado:";
+"observed_maximum" = "Máximo Observado:";
+"reference_listings" = "Referencias de Listados:";
+
+/* Price Input */
+"price_input_header" = "Investigación de Mercado";
+"price_input_instructions" = "Después de explorar todocoleccion.net, ingresa los precios que observaste para artículos similares.";
+"price_input_section" = "Precios Observados";
+"minimum_price" = "Precio Mínimo:";
+"median_price" = "Precio Mediano/Típico:";
+"maximum_price" = "Precio Máximo:";
+"listing_urls_section" = "URLs de Referencia (Opcional)";
+"listing_urls_footer" = "Pega las URLs de los listados que revisaste (una por línea). Se guardan solo como referencia.";
+"invalid_price_format" = "Por favor ingresa precios válidos usando solo números.";
+"prices_must_be_positive" = "Todos los precios deben ser mayores a cero.";
+"invalid_price_order" = "Mínimo debe ser ≤ Mediano ≤ Máximo";
+
+/* Condition Scoring */
+"condition_scoring" = "Evaluación de Condición";
+"condition_scoring_header" = "Condición del Artículo";
+"condition_scoring_instructions" = "Ayúdanos a evaluar la condición y rareza de tu artículo para calcular una estimación precisa.";
+"condition_assessment" = "Tu Evaluación de Condición";
+
+/* Condition Levels */
+"overall_condition" = "Condición General:";
+"condition_mint" = "Perfecto / Como Nuevo";
+"condition_excellent" = "Excelente";
+"condition_good" = "Bueno";
+"condition_fair" = "Regular";
+"condition_poor" = "Malo";
+
+"condition_description_mint" = "Condición perfecta, como nuevo";
+"condition_description_excellent" = "Desgaste mínimo, casi perfecto";
+"condition_description_good" = "Signos normales de edad y uso";
+"condition_description_fair" = "Desgaste o daño notable";
+"condition_description_poor" = "Daño o deterioro significativo";
+
+/* Restoration */
+"restoration_section" = "Restauración";
+"has_restoration" = "¿Ha sido restaurado?";
+"restoration_quality" = "Calidad de Restauración:";
+"restoration_professional" = "Profesional";
+"restoration_amateur" = "Amateur";
+"restoration_none" = "Ninguna";
+
+/* Authenticity */
+"authenticity_belief_section" = "Creencia de Autenticidad";
+"authenticity_belief" = "Tu Creencia:";
+"authenticity_definitely_authentic" = "Definitivamente Auténtico";
+"authenticity_probably_authentic" = "Probablemente Auténtico";
+"authenticity_uncertain" = "Incierto";
+"authenticity_probably_replica" = "Probablemente Réplica";
+"authenticity_disclaimer" = "Esta es solo tu creencia. No podemos verificar autenticidad.";
+
+/* Completeness */
+"completeness_section" = "Completitud";
+"completeness" = "Completitud:";
+"completeness_complete" = "Completo";
+"completeness_mostly_complete" = "Mayormente Completo";
+"completeness_incomplete" = "Incompleto / Faltan Partes";
+
+/* Rarity */
+"rarity_section" = "Rareza";
+"rarity" = "Rareza:";
+"rarity_very_rare" = "Muy Raro";
+"rarity_rare" = "Raro";
+"rarity_uncommon" = "Poco Común";
+"rarity_common" = "Común";
+"rarity_description" = "Según tu investigación de mercado, ¿qué tan raro es este artículo?";
+
+/* Legal Disclaimers */
+"disclaimer_title" = "Aviso Importante";
+"price_estimation_disclaimer" = "Valor estimado basado en tu investigación de mercado y evaluación de condición. No es una tasación oficial.";
+"todocoleccion_attribution" = "Las referencias de mercado pueden incluir todocoleccion.net. Sin afiliación o respaldo. Toda navegación hecha manualmente por ti.";
+"legal_disclaimer" = "Esta aplicación proporciona solo estimaciones. Consulta a un tasador profesional para valoraciones oficiales.";
+"no_scraping_notice" = "Esta app respeta robots.txt y no extrae, obtiene o automatiza todocoleccion.net. Toda navegación es hecha por ti.";
+
+/* General */
+"antique_object" = "Objeto Antiguo";
+"user_assessed_item" = "Antigüedad Evaluada por Usuario";
+"assessment_date" = "Fecha de Evaluación:";
 
 /* Confidence */
 "confidence" = "Confianza";
@@ -27,16 +127,4 @@
 "network_error" = "Error de red";
 "no_similar_items" = "No se encontraron artículos similares";
 "invalid_response" = "Respuesta inválida del servidor";
-"authentication_required" = "Se requiere autenticación";
-"rate_limit_exceeded" = "Se excedió el límite de solicitudes";
-"service_unavailable" = "Servicio no disponible";
-"invalid_api_key" = "Clave de API inválida";
-"search_in_progress" = "Buscando artículos similares...";
-
-/* Scraper Error Messages */
-"scraper_invalid_query" = "Consulta de búsqueda inválida";
-"scraper_invalid_url" = "Formato de URL inválido";
-"scraper_invalid_encoding" = "No se pudo analizar la codificación de la respuesta";
-"scraper_http_error" = "Error HTTP: %d";
-"scraper_no_items_found" = "No se encontraron artículos que coincidan con la búsqueda";
 
