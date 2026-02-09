@@ -92,16 +92,19 @@ cd AntiqueAssessor
 # List available schemes
 xcodebuild -list
 
-# Build for simulator
+# Build for simulator (adjust device name to match your available simulators)
 xcodebuild -project AntiqueAssessor.xcodeproj \
            -scheme AntiqueAssessor \
-           -destination 'platform=iOS Simulator,name=iPhone 14 Pro' \
+           -destination 'platform=iOS Simulator,name=iPhone 15' \
            build
 
 # Run tests (when implemented)
 xcodebuild test -project AntiqueAssessor.xcodeproj \
                 -scheme AntiqueAssessor \
-                -destination 'platform=iOS Simulator,name=iPhone 14 Pro'
+                -destination 'platform=iOS Simulator,name=iPhone 15'
+
+# To list available simulators:
+# xcrun simctl list devices
 ```
 
 ### Known Build Issues and Workarounds
