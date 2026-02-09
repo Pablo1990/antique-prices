@@ -41,45 +41,114 @@ class AssessmentService: ObservableObject {
             throw AssessmentError.imageProcessingFailed
         }
         
-        // In a real implementation, this would use Vision and CoreML
-        // For now, returning mock data
-        let objects = ["antigüedad", "objeto antiguo", "artículo vintage"]
-        let randomObject = objects.randomElement() ?? "objeto desconocido"
+        // Try to use Vision framework to classify the image
+        // If Vision fails (e.g., espresso context error), fall back to generic search
+        var searchTerms: [String] = []
+        
+        do {
+            let observations = try await performImageClassification(cgImage: cgImage)
+            
+            // Extract top classifications to build search query
+            let topClassifications = observations.prefix(3).map { $0.identifier }
+            
+            // Map common Vision classifications to Spanish antique categories
+            for classification in topClassifications {
+                let lowercased = classification.lowercased()
+                
+                // Common antique categories
+                if lowercased.contains("coin") || lowercased.contains("money") {
+                    searchTerms.append("moneda antigua")
+                } else if lowercased.contains("furniture") || lowercased.contains("chair") || lowercased.contains("table") {
+                    searchTerms.append("mueble antiguo")
+                } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") {
+                    searchTerms.append("cerámica antigua")
+                } else if lowercased.contains("painting") || lowercased.contains("art") {
+                    searchTerms.append("pintura antigua")
+                } else if lowercased.contains("jewelry") || lowercased.contains("ring") || lowercased.contains("necklace") {
+                    searchTerms.append("joya antigua")
+                } else if lowercased.contains("book") {
+                    searchTerms.append("libro antiguo")
+                } else if lowercased.contains("watch") || lowercased.contains("clock") {
+                    searchTerms.append("reloj antiguo")
+                } else if lowercased.contains("toy") {
+                    searchTerms.append("juguete antiguo")
+                }
+            }
+        } catch {
+            // Vision framework failed (e.g., espresso context not available)
+            // Log the error but continue with fallback search terms
+            print("Vision framework unavailable, using generic search terms: \(error.localizedDescription)")
+        }
+        
+        // If no specific category matched or Vision failed, use generic terms
+        if searchTerms.isEmpty {
+            searchTerms = ["antigüedad", "colección"]
+        }
+        
+        let searchQuery = searchTerms.joined(separator: " ")
         
         return (
             name: "Objeto Antiguo",
-            description: "Este parece ser un \(randomObject) de valor histórico. Se recomienda una evaluación más detallada."
+            description: searchQuery
         )
     }
     
+    /// Perform image classification using Vision framework
+    private func performImageClassification(cgImage: CGImage) async throws -> [VNClassificationObservation] {
+        return try await withCheckedThrowingContinuation { continuation in
+            let request = VNClassifyImageRequest { request, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let observations = request.results as? [VNClassificationObservation] else {
+                    continuation.resume(throwing: AssessmentError.imageProcessingFailed)
+                    return
+                }
+                
+                continuation.resume(returning: observations)
+            }
+            
+            let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+            // Perform the request - any errors will be reported to the completion handler
+            // Don't wrap in do-catch to avoid resuming continuation twice
+            try? handler.perform([request])
+        }
+    }
+    
     private func searchSimilarItems(description: String) async throws -> [AntiqueItem.SimilarItem] {
-        // In a real implementation, this would scrape todocoleccion.net
-        // For demonstration, returning mock similar items
+        // Use the TodoColeccionScraper to fetch real items
+        let scraper = TodoColeccionScraper()
         
-        let mockItems = [
-            AntiqueItem.SimilarItem(
-                name: "Antigüedad Similar 1",
-                price: 125.0,
-                url: "\(baseURL)/antiguedades/item1"
-            ),
-            AntiqueItem.SimilarItem(
-                name: "Antigüedad Similar 2",
-                price: 180.0,
-                url: "\(baseURL)/antiguedades/item2"
-            ),
-            AntiqueItem.SimilarItem(
-                name: "Antigüedad Similar 3",
-                price: 150.0,
-                url: "\(baseURL)/antiguedades/item3"
-            ),
-            AntiqueItem.SimilarItem(
-                name: "Antigüedad Similar 4",
-                price: 200.0,
-                url: "\(baseURL)/antiguedades/item4"
-            )
-        ]
-        
-        return mockItems
+        do {
+            let scrapedItems = try await scraper.searchAntiques(query: description)
+            
+            // Convert scraped items to SimilarItem format
+            let similarItems = scrapedItems.map { item in
+                AntiqueItem.SimilarItem(
+                    name: item.name,
+                    price: item.price,
+                    url: item.url
+                )
+            }
+            
+            // Return items if we found any
+            if !similarItems.isEmpty {
+                return similarItems
+            }
+            
+            // If no items found, throw error
+            throw AssessmentError.noSimilarItemsFound
+            
+        } catch AssessmentError.noSimilarItemsFound {
+            // Propagate the "no similar items" condition to the caller
+            throw AssessmentError.noSimilarItemsFound
+        } catch {
+            // If scraping fails, log the error and throw a network error
+            print("Error scraping TodoColección.net: \(error.localizedDescription)")
+            throw AssessmentError.networkError
+        }
     }
     
     internal func calculatePriceEstimate(from items: [AntiqueItem.SimilarItem]) -> (average: Double, min: Double, max: Double) {

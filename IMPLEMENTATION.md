@@ -60,28 +60,40 @@ This iOS app implements the core functionality for assessing antiques found in S
 
 ## Data Sources
 
-### TodoColección.net Integration
-The app is designed to integrate with [TodoColección.net](https://www.todocoleccion.net/), a trusted Spanish antiques marketplace.
+### TodoColección.net Integration ✅
+The app now integrates with [TodoColección.net](https://www.todocoleccion.net/), a trusted Spanish antiques marketplace.
 
 **Current Implementation:**
-- Service layer ready for API/web scraping integration
-- Data models support similar items with URLs and prices
-- Mock data demonstrates expected data flow
+- ✅ Real web scraping using native URLSession
+- ✅ HTML parsing without external dependencies (pure Swift)
+- ✅ Vision framework integration for image classification
+- ✅ Spanish search term mapping for better results
+- ✅ Price extraction and parsing
+- ✅ Comprehensive error handling
 
-**Future Enhancement:**
-To fully integrate with todocoleccion.net:
-1. Implement web scraping or negotiate API access
-2. Add search functionality based on image analysis
-3. Parse item data (name, price, description, URL)
-4. Handle pagination and filtering
+**Features:**
+- Searches todocoleccion.net based on image analysis
+- Extracts real item names, prices, and URLs
+- Returns top 10 similar items
+- Handles Spanish characters and formatting
+- Multiple parsing strategies for robustness
+
+For detailed information about the web scraping implementation, see [SCRAPING_IMPLEMENTATION.md](SCRAPING_IMPLEMENTATION.md).
 
 ## Machine Learning Capabilities
 
-### Vision Framework
+### Vision Framework ✅
 The app uses Apple's Vision framework for:
 - Object detection and recognition
-- Image classification
+- Image classification with VNClassifyImageRequest
 - Feature extraction
+- Mapping classifications to Spanish antique categories
+
+**Current Implementation:**
+- Real Vision framework integration
+- Classification mapping (e.g., "coin" → "moneda antigua")
+- Async/await for non-blocking image processing
+- Error handling for image processing failures
 
 ### Authenticity Detection
 Current approach:
@@ -126,21 +138,24 @@ Current approach:
 
 ## Known Limitations
 
-1. **Mock Data**: Currently returns simulated assessment data for demonstration
-2. **Network Integration**: TodoColección.net integration requires implementation
-3. **ML Models**: Using framework defaults, custom models would improve accuracy
-4. **Offline Mode**: Requires internet connection for full functionality
-5. **History**: No user history or saved assessments yet
+1. **Mock Authenticity/Period Data**: Authenticity and period detection still use simulated data (ML models not trained yet)
+2. **Website Structure Dependent**: Web scraping depends on todocoleccion.net's HTML structure
+3. **Network Required**: App requires internet connection to search for similar items
+4. **No Official API**: Uses web scraping, not an official todocoleccion.net API
+5. **No Rate Limiting**: Heavy usage may be rate-limited by todocoleccion.net
+6. **No History**: No user history or saved assessments yet
 
 ## Future Enhancements
 
 ### High Priority
-- Real todocoleccion.net API/scraping integration
-- Custom CoreML models for better accuracy
+- Custom CoreML models for authenticity detection
+- Custom CoreML models for period identification
 - User authentication and history
-- Offline mode with cached data
+- Caching of search results
+- Retry logic with exponential backoff
 
 ### Medium Priority
+- Official API integration (if todocoleccion.net provides one)
 - Export assessment reports (PDF/Share)
 - Multiple photo support for single item
 - Category-specific assessment (coins, paintings, furniture)

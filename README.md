@@ -8,19 +8,25 @@ A completely free, open-source iOS app to faithfully assess antiques that can be
 
 ### Español
 - 📸 **Captura de Fotos**: Toma fotos de antigüedades directamente desde la aplicación
-- 💰 **Valoración de Precios**: Estima precios basándose en datos reales de todocoleccion.net
+- 💰 **Valoración de Precios**: Estima precios basándose en datos reales de todocoleccion.net mediante web scraping
 - 🔍 **Detección de Falsificaciones**: Determina si un artículo es auténtico o falso con porcentaje de precisión
 - 🕰️ **Identificación de Época**: Identifica el período histórico del artículo con porcentaje de confianza
+- 🤖 **Reconocimiento de Imágenes**: Usa Vision framework de Apple para clasificar automáticamente antigüedades
+- 🔗 **Artículos Similares**: Encuentra artículos similares reales en todocoleccion.net con precios actuales
 - 🌐 **Bilingüe**: Soporte completo en Español e Inglés
 - 🆓 **100% Gratuito**: Sin compras dentro de la aplicación, sin suscripciones
+- 🔓 **Código Abierto**: Todo el código es abierto y auditable
 
 ### English
 - 📸 **Photo Capture**: Take photos of antiques directly from the app
-- 💰 **Price Valuation**: Estimates prices based on real data from todocoleccion.net
+- 💰 **Price Valuation**: Estimates prices based on real data from todocoleccion.net via web scraping
 - 🔍 **Fake Detection**: Determines if an item is authentic or fake with accuracy percentage
 - 🕰️ **Period Identification**: Identifies the historical period of the item with confidence percentage
+- 🤖 **Image Recognition**: Uses Apple's Vision framework to automatically classify antiques
+- 🔗 **Similar Items**: Find real similar items on todocoleccion.net with current prices
 - 🌐 **Bilingual**: Full support in Spanish and English
 - 🆓 **100% Free**: No in-app purchases, no subscriptions
+- 🔓 **Open Source**: All code is open and auditable
 
 ## 🔗 Trusted Sources / Fuentes Confiables
 
@@ -81,9 +87,10 @@ La aplicación requiere acceso a la cámara para tomar fotos de antigüedades. L
 
 The app is built using:
 - **SwiftUI**: Modern declarative UI framework
-- **Vision Framework**: For image recognition and analysis
+- **Vision Framework**: For image recognition and classification (VNClassifyImageRequest)
 - **CoreML**: For machine learning models (authenticity and period detection)
-- **URLSession**: For network requests to todocoleccion.net
+- **URLSession**: For web scraping todocoleccion.net (native HTTP requests)
+- **Pure Swift**: No external dependencies, only native iOS frameworks
 
 ### Project Structure / Estructura del Proyecto
 
@@ -97,7 +104,8 @@ AntiqueAssessor/
 │   ├── Models/
 │   │   └── AntiqueItem.swift            # Data models
 │   ├── Services/
-│   │   └── AssessmentService.swift      # Core assessment logic
+│   │   ├── AssessmentService.swift      # Core assessment logic
+│   │   └── TodoColeccionScraper.swift   # Web scraping service
 │   ├── Localization/
 │   │   ├── es.lproj/                    # Spanish translations
 │   │   └── en.lproj/                    # English translations
@@ -126,11 +134,15 @@ Contributions are welcome! / ¡Las contribuciones son bienvenidas!
 ## 📋 Roadmap / Hoja de Ruta
 
 - [x] Basic camera functionality
-- [x] Price estimation from todocoleccion.net
+- [x] Real web scraping of todocoleccion.net
+- [x] Vision framework image classification
+- [x] Price estimation from real market data
+- [x] Similar items with actual URLs and prices
 - [x] Authenticity detection with ML
 - [x] Period identification
 - [x] Bilingual support (Spanish/English)
-- [ ] Improved ML models for better accuracy
+- [ ] Custom trained CoreML models for antiques
+- [ ] Improved accuracy for authenticity detection
 - [ ] Offline mode with cached data
 - [ ] User history and favorites
 - [ ] Export assessment reports
@@ -146,6 +158,15 @@ Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICEN
 
 - [TodoColección.net](https://www.todocoleccion.net/) for being a trusted source of Spanish antiques market data
 - The iOS development community for excellent tools and frameworks
+
+## 📚 Technical Documentation / Documentación Técnica
+
+For detailed technical information, see:
+- [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation status and technical details
+- [SCRAPING_IMPLEMENTATION.md](SCRAPING_IMPLEMENTATION.md) - Web scraping implementation guide
+- [BUILD.md](BUILD.md) - Build and setup instructions
+- [API_INTEGRATION.md](API_INTEGRATION.md) - Integration examples and patterns
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
 
 ## 📧 Contact / Contacto
 
