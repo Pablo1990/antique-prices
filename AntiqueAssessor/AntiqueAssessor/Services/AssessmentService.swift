@@ -25,6 +25,12 @@ class AssessmentService: ObservableObject {
             // Extract top classifications to build search query
             let topClassifications = observations.prefix(10)
             
+            // Debug logging
+            print("Vision framework returned \(observations.count) observations")
+            if let topObservation = topClassifications.first {
+                print("Top observation: \(topObservation.identifier) (confidence: \(topObservation.confidence))")
+            }
+            
             // Get confidence from top observation
             if let topObservation = topClassifications.first {
                 confidence = Double(topObservation.confidence)
@@ -32,50 +38,60 @@ class AssessmentService: ObservableObject {
             
             // Use actual Vision keywords directly instead of mapping
             // Extract the actual detected objects as keywords
-            for observation in topClassifications where observation.confidence > 0.1 {
+            // Always include at least the top 3 results, then add more if confidence > 0.05
+            var addedCount = 0
+            for observation in topClassifications {
                 let identifier = observation.identifier.lowercased()
                 
-                // Add the identifier itself as a keyword (no mapping)
-                keywords.append(identifier)
-                
-                // Determine suggested category based on top detection
-                if observation == topClassifications.first {
-                    suggestedCategory = identifier
-                }
-                
-                // Analyze object type to suggest condition defaults
-                // Delicate items tend to be in better condition if still intact
-                if identifier.contains("glass") || identifier.contains("ceramic") || identifier.contains("porcelain") || 
-                   identifier.contains("vase") || identifier.contains("crystal") {
-                    suggestedCondition = .excellent // Glass/ceramic that survived is usually well-preserved
-                    suggestedRarity = .rare // Fragile items that survived are often rare
-                } else if identifier.contains("jewelry") || identifier.contains("ring") || identifier.contains("necklace") ||
-                          identifier.contains("gold") || identifier.contains("silver") {
-                    suggestedCondition = .excellent // Precious metals preserve well
-                    suggestedRarity = .rare // Jewelry is often unique
-                } else if identifier.contains("coin") || identifier.contains("money") {
-                    suggestedCondition = .good // Coins often show wear
-                    suggestedRarity = .uncommon // Most coins are somewhat common
-                } else if identifier.contains("furniture") || identifier.contains("chair") || identifier.contains("table") {
-                    suggestedCondition = .good // Furniture typically shows use
-                    suggestedRarity = .common // Furniture is often mass-produced
-                } else if identifier.contains("book") || identifier.contains("document") || identifier.contains("paper") {
-                    suggestedCondition = .fair // Paper deteriorates over time
-                    suggestedRarity = .uncommon // Old books vary in rarity
-                } else if identifier.contains("painting") || identifier.contains("art") || identifier.contains("canvas") {
-                    suggestedCondition = .good // Art pieces often preserved
-                    suggestedRarity = .rare // Art is typically unique
-                } else if identifier.contains("toy") || identifier.contains("doll") {
-                    suggestedCondition = .fair // Toys usually show play wear
-                    suggestedRarity = .uncommon // Vintage toys vary
-                } else if identifier.contains("watch") || identifier.contains("clock") {
-                    suggestedCondition = .good // Timepieces often maintained
-                    suggestedRarity = .rare // Mechanical watches are valuable
-                } else if identifier.contains("bottle") {
-                    suggestedCondition = .good // Glass bottles preserve well
-                    suggestedRarity = .uncommon // Old bottles are collectible
+                // Include top 3 results regardless of confidence, or any result with confidence > 0.05
+                if addedCount < 3 || observation.confidence > 0.05 {
+                    // Add the identifier itself as a keyword (no mapping)
+                    keywords.append(identifier)
+                    addedCount += 1
+                    
+                    print("Added keyword: \(identifier) (confidence: \(observation.confidence))")
+                    
+                    // Determine suggested category based on top detection
+                    if observation == topClassifications.first {
+                        suggestedCategory = identifier
+                    }
+                    
+                    // Analyze object type to suggest condition defaults
+                    // Delicate items tend to be in better condition if still intact
+                    if identifier.contains("glass") || identifier.contains("ceramic") || identifier.contains("porcelain") || 
+                       identifier.contains("vase") || identifier.contains("crystal") {
+                        suggestedCondition = .excellent // Glass/ceramic that survived is usually well-preserved
+                        suggestedRarity = .rare // Fragile items that survived are often rare
+                    } else if identifier.contains("jewelry") || identifier.contains("ring") || identifier.contains("necklace") ||
+                              identifier.contains("gold") || identifier.contains("silver") {
+                        suggestedCondition = .excellent // Precious metals preserve well
+                        suggestedRarity = .rare // Jewelry is often unique
+                    } else if identifier.contains("coin") || identifier.contains("money") {
+                        suggestedCondition = .good // Coins often show wear
+                        suggestedRarity = .uncommon // Most coins are somewhat common
+                    } else if identifier.contains("furniture") || identifier.contains("chair") || identifier.contains("table") {
+                        suggestedCondition = .good // Furniture typically shows use
+                        suggestedRarity = .common // Furniture is often mass-produced
+                    } else if identifier.contains("book") || identifier.contains("document") || identifier.contains("paper") {
+                        suggestedCondition = .fair // Paper deteriorates over time
+                        suggestedRarity = .uncommon // Old books vary in rarity
+                    } else if identifier.contains("painting") || identifier.contains("art") || identifier.contains("canvas") {
+                        suggestedCondition = .good // Art pieces often preserved
+                        suggestedRarity = .rare // Art is typically unique
+                    } else if identifier.contains("toy") || identifier.contains("doll") {
+                        suggestedCondition = .fair // Toys usually show play wear
+                        suggestedRarity = .uncommon // Vintage toys vary
+                    } else if identifier.contains("watch") || identifier.contains("clock") {
+                        suggestedCondition = .good // Timepieces often maintained
+                        suggestedRarity = .rare // Mechanical watches are valuable
+                    } else if identifier.contains("bottle") {
+                        suggestedCondition = .good // Glass bottles preserve well
+                        suggestedRarity = .uncommon // Old bottles are collectible
+                    }
                 }
             }
+            
+            print("Total keywords added from Vision: \(keywords.count)")
             
             // Add generic era keywords for variety
             eraKeywords = ["antiguo", "vintage", "colección"]
