@@ -58,6 +58,7 @@
 "condition_scoring" = "Evaluación de Condición";
 "condition_scoring_header" = "Condición del Artículo";
 "condition_scoring_instructions" = "Ayúdanos a evaluar la condición y rareza de tu artículo para calcular una estimación precisa.";
+"ai_suggestions_notice" = "ℹ️ La IA ha preseleccionado valores sugeridos basados en el objeto detectado. Por favor ajusta según sea necesario.";
 "condition_assessment" = "Tu Evaluación de Condición";
 
 /* Condition Levels */

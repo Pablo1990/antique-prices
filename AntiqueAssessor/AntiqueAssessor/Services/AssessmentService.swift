@@ -16,51 +16,64 @@ class AssessmentService: ObservableObject {
         var keywords: [String] = []
         var eraKeywords: [String] = []
         var confidence = 0.5
+        var suggestedCondition: ConditionAssessment.ConditionLevel = .good
+        var suggestedRarity: ConditionAssessment.RarityLevel = .uncommon
         
         do {
             let observations = try await performImageClassification(cgImage: cgImage)
             
             // Extract top classifications to build search query
-            let topClassifications = observations.prefix(5)
+            let topClassifications = observations.prefix(10)
             
             // Get confidence from top observation
             if let topObservation = topClassifications.first {
                 confidence = Double(topObservation.confidence)
             }
             
-            // Map common Vision classifications to Spanish antique categories
-            for observation in topClassifications {
-                let lowercased = observation.identifier.lowercased()
+            // Use actual Vision keywords directly instead of mapping
+            // Extract the actual detected objects as keywords
+            for observation in topClassifications where observation.confidence > 0.1 {
+                let identifier = observation.identifier.lowercased()
                 
-                // Common antique categories
-                if lowercased.contains("coin") || lowercased.contains("money") {
-                    suggestedCategory = "moneda antigua"
-                    keywords.append("numismática")
-                } else if lowercased.contains("furniture") || lowercased.contains("chair") || lowercased.contains("table") {
-                    suggestedCategory = "mueble antiguo"
-                    keywords.append("mobiliario")
-                } else if lowercased.contains("vase") || lowercased.contains("pot") || lowercased.contains("jar") || lowercased.contains("ceramic") {
-                    suggestedCategory = "cerámica antigua"
-                    keywords.append("porcelana")
-                } else if lowercased.contains("painting") || lowercased.contains("art") {
-                    suggestedCategory = "pintura antigua"
-                    keywords.append("arte")
-                } else if lowercased.contains("jewelry") || lowercased.contains("ring") || lowercased.contains("necklace") {
-                    suggestedCategory = "joya antigua"
-                    keywords.append("bisutería")
-                } else if lowercased.contains("book") {
-                    suggestedCategory = "libro antiguo"
-                    keywords.append("bibliofilia")
-                } else if lowercased.contains("watch") || lowercased.contains("clock") {
-                    suggestedCategory = "reloj antiguo"
-                    keywords.append("relojería")
-                } else if lowercased.contains("toy") {
-                    suggestedCategory = "juguete antiguo"
-                    keywords.append("colección")
-                } else if lowercased.contains("bottle") || lowercased.contains("glass") {
-                    keywords.append("cristal")
-                } else if lowercased.contains("metal") || lowercased.contains("bronze") || lowercased.contains("silver") {
-                    keywords.append("metal")
+                // Add the identifier itself as a keyword (no mapping)
+                keywords.append(identifier)
+                
+                // Determine suggested category based on top detection
+                if observation == topClassifications.first {
+                    suggestedCategory = identifier
+                }
+                
+                // Analyze object type to suggest condition defaults
+                // Delicate items tend to be in better condition if still intact
+                if identifier.contains("glass") || identifier.contains("ceramic") || identifier.contains("porcelain") || 
+                   identifier.contains("vase") || identifier.contains("crystal") {
+                    suggestedCondition = .excellent // Glass/ceramic that survived is usually well-preserved
+                    suggestedRarity = .rare // Fragile items that survived are often rare
+                } else if identifier.contains("jewelry") || identifier.contains("ring") || identifier.contains("necklace") ||
+                          identifier.contains("gold") || identifier.contains("silver") {
+                    suggestedCondition = .excellent // Precious metals preserve well
+                    suggestedRarity = .rare // Jewelry is often unique
+                } else if identifier.contains("coin") || identifier.contains("money") {
+                    suggestedCondition = .good // Coins often show wear
+                    suggestedRarity = .uncommon // Most coins are somewhat common
+                } else if identifier.contains("furniture") || identifier.contains("chair") || identifier.contains("table") {
+                    suggestedCondition = .good // Furniture typically shows use
+                    suggestedRarity = .common // Furniture is often mass-produced
+                } else if identifier.contains("book") || identifier.contains("document") || identifier.contains("paper") {
+                    suggestedCondition = .fair // Paper deteriorates over time
+                    suggestedRarity = .uncommon // Old books vary in rarity
+                } else if identifier.contains("painting") || identifier.contains("art") || identifier.contains("canvas") {
+                    suggestedCondition = .good // Art pieces often preserved
+                    suggestedRarity = .rare // Art is typically unique
+                } else if identifier.contains("toy") || identifier.contains("doll") {
+                    suggestedCondition = .fair // Toys usually show play wear
+                    suggestedRarity = .uncommon // Vintage toys vary
+                } else if identifier.contains("watch") || identifier.contains("clock") {
+                    suggestedCondition = .good // Timepieces often maintained
+                    suggestedRarity = .rare // Mechanical watches are valuable
+                } else if identifier.contains("bottle") {
+                    suggestedCondition = .good // Glass bottles preserve well
+                    suggestedRarity = .uncommon // Old bottles are collectible
                 }
             }
             
@@ -69,20 +82,22 @@ class AssessmentService: ObservableObject {
             
         } catch {
             // Vision framework failed - use generic terms
-            print("Vision framework unavailable, using generic search terms: \(error.localizedDescription)")
+            print("ERROR: Vision framework unavailable, using generic search terms: \(error.localizedDescription)")
             suggestedCategory = "antigüedad"
             keywords = ["colección", "vintage"]
             eraKeywords = ["antiguo"]
         }
         
-        // Remove duplicates
-        keywords = Array(Set(keywords))
+        // Remove duplicates and limit keywords
+        keywords = Array(Set(keywords)).prefix(5).map { $0 }
         
         return ImageAnalysisResult(
             suggestedCategory: suggestedCategory,
             suggestedKeywords: keywords,
             eraStyleKeywords: eraKeywords,
-            confidence: confidence
+            confidence: confidence,
+            suggestedCondition: suggestedCondition,
+            suggestedRarity: suggestedRarity
         )
     }
     
@@ -104,7 +119,11 @@ class AssessmentService: ObservableObject {
             }
             
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-            try? handler.perform([request])
+            do {
+                try handler.perform([request])
+            } catch {
+                continuation.resume(throwing: error)
+            }
         }
     }
     

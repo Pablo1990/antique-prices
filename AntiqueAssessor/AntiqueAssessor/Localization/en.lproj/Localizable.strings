@@ -58,6 +58,7 @@
 "condition_scoring" = "Condition Assessment";
 "condition_scoring_header" = "Item Condition";
 "condition_scoring_instructions" = "Help us assess the condition and rarity of your item to calculate an accurate estimate.";
+"ai_suggestions_notice" = "ℹ️ AI has pre-selected suggested values based on the detected object. Please adjust as needed.";
 "condition_assessment" = "Your Condition Assessment";
 
 /* Condition Levels */

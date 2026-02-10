@@ -4,12 +4,27 @@ struct ConditionScoringView: View {
     @Binding var conditionAssessment: ConditionAssessment?
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var overallCondition: ConditionAssessment.ConditionLevel = .good
+    let suggestedCondition: ConditionAssessment.ConditionLevel?
+    let suggestedRarity: ConditionAssessment.RarityLevel?
+    
+    @State private var overallCondition: ConditionAssessment.ConditionLevel
     @State private var hasRestoration = false
     @State private var restorationQuality: ConditionAssessment.RestorationQuality = .none
     @State private var believedAuthenticity: ConditionAssessment.AuthenticityBelief = .probablyAuthentic
     @State private var completeness: ConditionAssessment.CompletenessLevel = .complete
-    @State private var rarity: ConditionAssessment.RarityLevel = .uncommon
+    @State private var rarity: ConditionAssessment.RarityLevel
+    
+    init(conditionAssessment: Binding<ConditionAssessment?>, 
+         suggestedCondition: ConditionAssessment.ConditionLevel? = nil, 
+         suggestedRarity: ConditionAssessment.RarityLevel? = nil) {
+        self._conditionAssessment = conditionAssessment
+        self.suggestedCondition = suggestedCondition
+        self.suggestedRarity = suggestedRarity
+        
+        // Initialize state with suggested values or defaults
+        _overallCondition = State(initialValue: suggestedCondition ?? .good)
+        _rarity = State(initialValue: suggestedRarity ?? .uncommon)
+    }
     
     var body: some View {
         NavigationView {
@@ -18,6 +33,13 @@ struct ConditionScoringView: View {
                     Text("condition_scoring_instructions")
                         .font(.footnote)
                         .foregroundColor(.secondary)
+                    
+                    if suggestedCondition != nil || suggestedRarity != nil {
+                        Text("ai_suggestions_notice")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .padding(.top, 4)
+                    }
                 }
                 
                 Section(header: Text("overall_condition")) {

@@ -6,6 +6,8 @@ struct ImageAnalysisResult {
     let suggestedKeywords: [String]
     let eraStyleKeywords: [String]
     let confidence: Double
+    let suggestedCondition: ConditionAssessment.ConditionLevel
+    let suggestedRarity: ConditionAssessment.RarityLevel
     
     /// Generate search query for todocoleccion.net
     var searchQuery: String {
