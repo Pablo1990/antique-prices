@@ -15,7 +15,11 @@
 		AA000001000000000000000B /* AntiqueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000C /* AntiqueItem.swift */; };
 		AA000001000000000000000D /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000E /* ResultsView.swift */; };
 		AA000001000000000000000F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000010 /* Localizable.strings */; };
-		AA0000010000000000000027 /* TodoColeccionScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000028 /* TodoColeccionScraper.swift */; };
+		AA0000010000000000000029 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000002A /* SafariView.swift */; };
+		AA000001000000000000002B /* PriceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000002C /* PriceInputView.swift */; };
+		AA000001000000000000002D /* ConditionScoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000002E /* ConditionScoringView.swift */; };
+		AA000001000000000000002F /* UserProvidedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000030 /* UserProvidedData.swift */; };
+		AA0000010000000000000031 /* ImageAnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000032 /* ImageAnalysisResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +34,11 @@
 		AA0000010000000000000012 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0000010000000000000013 /* AntiqueAssessor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AntiqueAssessor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000010000000000000014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA0000010000000000000028 /* TodoColeccionScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColeccionScraper.swift; sourceTree = "<group>"; };
+		AA000001000000000000002A /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		AA000001000000000000002C /* PriceInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputView.swift; sourceTree = "<group>"; };
+		AA000001000000000000002E /* ConditionScoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionScoringView.swift; sourceTree = "<group>"; };
+		AA0000010000000000000030 /* UserProvidedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProvidedData.swift; sourceTree = "<group>"; };
+		AA0000010000000000000032 /* ImageAnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnalysisResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,9 @@
 				AA0000010000000000000004 /* ContentView.swift */,
 				AA0000010000000000000008 /* CameraView.swift */,
 				AA000001000000000000000E /* ResultsView.swift */,
+				AA000001000000000000002A /* SafariView.swift */,
+				AA000001000000000000002C /* PriceInputView.swift */,
+				AA000001000000000000002E /* ConditionScoringView.swift */,
 				AA000001000000000000001A /* Models */,
 				AA000001000000000000001B /* Services */,
 				AA0000010000000000000006 /* Assets.xcassets */,
@@ -80,6 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				AA000001000000000000000C /* AntiqueItem.swift */,
+				AA0000010000000000000030 /* UserProvidedData.swift */,
+				AA0000010000000000000032 /* ImageAnalysisResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -88,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				AA000001000000000000000A /* AssessmentService.swift */,
-				AA0000010000000000000028 /* TodoColeccionScraper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -177,7 +189,11 @@
 				AA0000010000000000000009 /* AssessmentService.swift in Sources */,
 				AA000001000000000000000B /* AntiqueItem.swift in Sources */,
 				AA000001000000000000000D /* ResultsView.swift in Sources */,
-				AA0000010000000000000027 /* TodoColeccionScraper.swift in Sources */,
+				AA0000010000000000000029 /* SafariView.swift in Sources */,
+				AA000001000000000000002B /* PriceInputView.swift in Sources */,
+				AA000001000000000000002D /* ConditionScoringView.swift in Sources */,
+				AA000001000000000000002F /* UserProvidedData.swift in Sources */,
+				AA0000010000000000000031 /* ImageAnalysisResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
