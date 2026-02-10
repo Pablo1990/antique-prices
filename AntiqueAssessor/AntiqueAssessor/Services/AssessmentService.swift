@@ -104,7 +104,12 @@ class AssessmentService: ObservableObject {
     /// Perform image classification using Vision framework
     private func performImageClassification(cgImage: CGImage) async throws -> [VNClassificationObservation] {
         return try await withCheckedThrowingContinuation { continuation in
+            var hasResumed = false
+            
             let request = VNClassifyImageRequest { request, error in
+                guard !hasResumed else { return }
+                hasResumed = true
+                
                 if let error = error {
                     continuation.resume(throwing: error)
                     return
@@ -122,6 +127,9 @@ class AssessmentService: ObservableObject {
             do {
                 try handler.perform([request])
             } catch {
+                // If perform() throws synchronously before completion handler runs
+                guard !hasResumed else { return }
+                hasResumed = true
                 continuation.resume(throwing: error)
             }
         }
