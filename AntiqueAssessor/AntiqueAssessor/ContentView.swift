@@ -253,7 +253,6 @@ struct ContentView: View {
                     if isComplete {
                         Image(systemName: "checkmark")
                             .foregroundColor(.white)
-                            .fontWeight(.bold)
                     } else {
                         Text("\(stepNumber)")
                             .foregroundColor(isActive ? .white : .gray)

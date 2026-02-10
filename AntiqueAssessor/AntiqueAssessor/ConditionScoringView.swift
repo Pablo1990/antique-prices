@@ -95,7 +95,6 @@ struct ConditionScoringView: View {
                     Button("continue") {
                         saveAssessment()
                     }
-                    .fontWeight(.semibold)
                 }
             }
         }

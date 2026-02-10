@@ -69,7 +69,6 @@ struct PriceInputView: View {
                     Button("continue") {
                         validateAndSave()
                     }
-                    .fontWeight(.semibold)
                 }
             }
             .alert("error", isPresented: $showError) {
