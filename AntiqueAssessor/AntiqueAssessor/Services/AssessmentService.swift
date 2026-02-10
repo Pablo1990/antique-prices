@@ -173,9 +173,6 @@ class AssessmentService: ObservableObject {
                 continuation.resume(returning: observations)
             }
             
-            // Configure request with more lenient settings for simulator compatibility
-            request.imageCropAndScaleOption = .scaleFit
-            
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
             do {
                 try handler.perform([request])
