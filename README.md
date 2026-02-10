@@ -1,36 +1,40 @@
 # Tasador de Antigüedades / Antique Assessor
 
-Una aplicación iOS completamente gratuita y de código abierto para evaluar fielmente antigüedades que se pueden encontrar en los mercados españoles.
+Una aplicación iOS completamente gratuita y de código abierto para evaluar fielmente antigüedades que se pueden encontrar en los mercados españoles mediante investigación de mercado asistida por el usuario.
 
-A completely free, open-source iOS app to faithfully assess antiques that can be found in Spanish markets.
+A completely free, open-source iOS app to faithfully assess antiques that can be found in Spanish markets using user-assisted market research.
 
 ## 🌟 Features / Características
 
 ### Español
 - 📸 **Captura de Fotos**: Toma fotos de antigüedades directamente desde la aplicación
-- 💰 **Valoración de Precios**: Estima precios basándose en datos reales de todocoleccion.net mediante web scraping
-- 🔍 **Detección de Falsificaciones**: Determina si un artículo es auténtico o falso con porcentaje de precisión
-- 🕰️ **Identificación de Época**: Identifica el período histórico del artículo con porcentaje de confianza
-- 🤖 **Reconocimiento de Imágenes**: Usa Vision framework de Apple para clasificar automáticamente antigüedades
-- 🔗 **Artículos Similares**: Encuentra artículos similares reales en todocoleccion.net con precios actuales
+- 🧠 **Análisis con IA**: Usa Vision framework y Core ML de Apple para identificar categorías y sugerir palabras clave
+- 🌐 **Navegación Asistida**: Abre Safari con búsquedas sugeridas en todocoleccion.net para que explores manualmente
+- 💰 **Entrada Manual de Precios**: Tú ingresas los precios que observas después de investigar el mercado
+- ⭐ **Evaluación de Condición**: Evalúa la condición, restauración, autenticidad y rareza de tu artículo
+- 📊 **Cálculo Transparente**: Fórmula clara: precio_estimado = precio_mediano × factor_condición × factor_rareza
 - 🌐 **Bilingüe**: Soporte completo en Español e Inglés
+- ✅ **100% Legal**: Sin scraping, sin automatización, respeta robots.txt y políticas de sitios web
 - 🆓 **100% Gratuito**: Sin compras dentro de la aplicación, sin suscripciones
 - 🔓 **Código Abierto**: Todo el código es abierto y auditable
 
 ### English
 - 📸 **Photo Capture**: Take photos of antiques directly from the app
-- 💰 **Price Valuation**: Estimates prices based on real data from todocoleccion.net via web scraping
-- 🔍 **Fake Detection**: Determines if an item is authentic or fake with accuracy percentage
-- 🕰️ **Period Identification**: Identifies the historical period of the item with confidence percentage
-- 🤖 **Image Recognition**: Uses Apple's Vision framework to automatically classify antiques
-- 🔗 **Similar Items**: Find real similar items on todocoleccion.net with current prices
+- 🧠 **AI Analysis**: Uses Apple's Vision framework and Core ML to identify categories and suggest keywords
+- 🌐 **Assisted Browsing**: Opens Safari with suggested searches on todocoleccion.net for you to browse manually
+- 💰 **Manual Price Entry**: You enter the prices you observe after researching the market
+- ⭐ **Condition Assessment**: Rate the condition, restoration, authenticity, and rarity of your item
+- 📊 **Transparent Calculation**: Clear formula: estimated_price = median_price × condition_factor × rarity_factor
 - 🌐 **Bilingual**: Full support in Spanish and English
+- ✅ **100% Legal**: No scraping, no automation, respects robots.txt and website policies
 - 🆓 **100% Free**: No in-app purchases, no subscriptions
 - 🔓 **Open Source**: All code is open and auditable
 
-## 🔗 Trusted Sources / Fuentes Confiables
+## 🔗 Reference Sources / Fuentes de Referencia
 
-- [TodoColección.net](https://www.todocoleccion.net/) - Principal fuente de datos de precios de mercado español / Main source for Spanish market price data
+- [TodoColección.net](https://www.todocoleccion.net/) - Fuente de referencia para investigación de mercado español (navegación manual del usuario) / Reference source for Spanish market research (user manual browsing)
+
+**Importante / Important**: Esta aplicación NO hace scraping ni automatización de todocoleccion.net. Toda navegación es manual por el usuario a través de Safari. / This app does NOT scrape or automate todocoleccion.net. All browsing is manual by the user through Safari.
 
 ## 🚀 Getting Started / Primeros Pasos
 
@@ -67,17 +71,29 @@ La aplicación requiere acceso a la cámara para tomar fotos de antigüedades. L
 
 ### Español
 1. **Toma una Foto**: Usa la cámara integrada para capturar una imagen de tu antigüedad
-2. **Evalúa**: Presiona el botón "Evaluar Antigüedad" para iniciar el análisis
-3. **Revisa Resultados**: Obtén información detallada sobre:
-   - Precio estimado y rango de precios
-   - Autenticidad con porcentaje de confianza
-   - Período histórico con porcentaje de precisión
-   - Artículos similares en todocoleccion.net
+2. **Analiza con IA**: La app usa Vision y Core ML para sugerir categorías y palabras clave de búsqueda
+3. **Explora el Mercado**: Safari se abre con una búsqueda sugerida en todocoleccion.net - tú navegas manualmente
+4. **Ingresa Precios**: Después de investigar, ingresa los precios mínimo, mediano y máximo que observaste
+5. **Evalúa Condición**: Responde preguntas sobre condición, restauración, autenticidad y rareza
+6. **Revisa Resultados**: Obtén una estimación calculada con:
+   - Precio estimado basado en tu investigación
+   - Desglose del cálculo (precio × condición × rareza)
+   - Tus observaciones de mercado
+   - Tu evaluación de condición
+   - Avisos legales claros
 
 ### English
 1. **Take a Photo**: Use the built-in camera to capture an image of your antique
-2. **Assess**: Press the "Assess Antique" button to start the analysis
-3. **Review Results**: Get detailed information about:
+2. **AI Analysis**: The app uses Vision and Core ML to suggest categories and search keywords
+3. **Browse Market**: Safari opens with a suggested search on todocoleccion.net - you browse manually
+4. **Enter Prices**: After researching, enter the minimum, median, and maximum prices you observed
+5. **Rate Condition**: Answer questions about condition, restoration, authenticity, and rarity
+6. **Review Results**: Get a calculated estimate with:
+   - Estimated price based on your research
+   - Calculation breakdown (price × condition × rarity)
+   - Your market observations
+   - Your condition assessment
+   - Clear legal disclaimers
    - Estimated price and price range
    - Authenticity with confidence percentage
    - Historical period with accuracy percentage
@@ -87,10 +103,11 @@ La aplicación requiere acceso a la cámara para tomar fotos de antigüedades. L
 
 The app is built using:
 - **SwiftUI**: Modern declarative UI framework
-- **Vision Framework**: For image recognition and classification (VNClassifyImageRequest)
-- **CoreML**: For machine learning models (authenticity and period detection)
-- **URLSession**: For web scraping todocoleccion.net (native HTTP requests)
+- **Vision Framework**: For on-device image recognition and classification (VNClassifyImageRequest)
+- **CoreML**: For machine learning models (category and keyword suggestion)
+- **SafariServices**: For legal browsing of todocoleccion.net (SFSafariViewController)
 - **Pure Swift**: No external dependencies, only native iOS frameworks
+- **Human-in-the-Loop**: User provides all market data manually
 
 ### Project Structure / Estructura del Proyecto
 
@@ -98,14 +115,18 @@ The app is built using:
 AntiqueAssessor/
 ├── AntiqueAssessor/
 │   ├── AntiqueAssessorApp.swift          # App entry point
-│   ├── ContentView.swift                 # Main view
+│   ├── ContentView.swift                 # Main view with 6-step workflow
 │   ├── CameraView.swift                  # Camera interface
-│   ├── ResultsView.swift                 # Results display
+│   ├── SafariView.swift                  # Safari browser wrapper
+│   ├── PriceInputView.swift              # Manual price entry
+│   ├── ConditionScoringView.swift        # Condition assessment
+│   ├── ResultsView.swift                 # Results with disclaimers
 │   ├── Models/
-│   │   └── AntiqueItem.swift            # Data models
+│   │   ├── AntiqueItem.swift            # Assessment result model
+│   │   ├── UserProvidedData.swift       # User input models
+│   │   └── ImageAnalysisResult.swift    # Vision analysis result
 │   ├── Services/
-│   │   ├── AssessmentService.swift      # Core assessment logic
-│   │   └── TodoColeccionScraper.swift   # Web scraping service
+│   │   └── AssessmentService.swift      # Image analysis & calculation
 │   ├── Localization/
 │   │   ├── es.lproj/                    # Spanish translations
 │   │   └── en.lproj/                    # English translations
@@ -134,19 +155,21 @@ Contributions are welcome! / ¡Las contribuciones son bienvenidas!
 ## 📋 Roadmap / Hoja de Ruta
 
 - [x] Basic camera functionality
-- [x] Real web scraping of todocoleccion.net
 - [x] Vision framework image classification
-- [x] Price estimation from real market data
-- [x] Similar items with actual URLs and prices
-- [x] Authenticity detection with ML
-- [x] Period identification
+- [x] Safari integration for manual browsing
+- [x] User manual price entry
+- [x] Condition and rarity assessment
+- [x] Price estimation formula
+- [x] Legal compliance (no scraping)
 - [x] Bilingual support (Spanish/English)
+- [x] Legal disclaimers and attribution
 - [ ] Custom trained CoreML models for antiques
-- [ ] Improved accuracy for authenticity detection
-- [ ] Offline mode with cached data
-- [ ] User history and favorites
-- [ ] Export assessment reports
-- [ ] Additional market sources integration
+- [ ] Save assessment history locally
+- [ ] Export assessment reports as PDF
+- [ ] Multiple photos per item
+- [ ] Category-specific condition questions
+- [ ] Comparison mode for multiple items
+- [ ] Enhanced image quality preprocessing
 
 ## 📄 License / Licencia
 
@@ -156,17 +179,24 @@ Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICEN
 
 ## 🙏 Acknowledgments / Agradecimientos
 
-- [TodoColección.net](https://www.todocoleccion.net/) for being a trusted source of Spanish antiques market data
+- [TodoColección.net](https://www.todocoleccion.net/) as a reference source for Spanish antiques market (user-browsed only)
 - The iOS development community for excellent tools and frameworks
+- Apple for Vision, CoreML, and SafariServices frameworks
+
+**Important Legal Note**: This app does not scrape, automate, or extract data from todocoleccion.net. All browsing is done manually by the user through Safari. The app fully respects robots.txt and website policies.
+
+**Nota Legal Importante**: Esta app no hace scraping, automatización ni extracción de datos de todocoleccion.net. Toda navegación es hecha manualmente por el usuario a través de Safari. La app respeta completamente robots.txt y las políticas del sitio web.
 
 ## 📚 Technical Documentation / Documentación Técnica
 
 For detailed technical information, see:
+- [LEGAL_COMPLIANCE.md](LEGAL_COMPLIANCE.md) - **IMPORTANT**: Legal architecture and compliance details
 - [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation status and technical details
-- [SCRAPING_IMPLEMENTATION.md](SCRAPING_IMPLEMENTATION.md) - Web scraping implementation guide
 - [BUILD.md](BUILD.md) - Build and setup instructions
 - [API_INTEGRATION.md](API_INTEGRATION.md) - Integration examples and patterns
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
+
+**Note**: The scraping implementation has been removed for legal compliance. See LEGAL_COMPLIANCE.md for the new human-in-the-loop architecture.
 
 ## 📧 Contact / Contacto
 
