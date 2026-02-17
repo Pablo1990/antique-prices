@@ -213,7 +213,11 @@ struct ContentView: View {
                     }
             }
             .sheet(isPresented: $showConditionScoring) {
-                ConditionScoringView(conditionAssessment: $conditionAssessment)
+                ConditionScoringView(
+                    conditionAssessment: $conditionAssessment,
+                    suggestedCondition: imageAnalysis?.suggestedCondition,
+                    suggestedRarity: imageAnalysis?.suggestedRarity
+                )
                     .onDisappear {
                         if conditionAssessment != nil {
                             currentStep = .complete

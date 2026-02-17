@@ -500,4 +500,4 @@ class KeychainManager {
 
 ---
 
-For more information, see the main [README.md](README.md) and [IMPLEMENTATION.md](IMPLEMENTATION.md).
+For more information, see the main [README.md](../README.md) and [IMPLEMENTATION.md](IMPLEMENTATION.md).
