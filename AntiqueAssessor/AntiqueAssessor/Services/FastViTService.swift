@@ -70,10 +70,16 @@ class FastViTService {
         }
         
         return try await withCheckedThrowingContinuation { continuation in
+            // Thread-safe flag to prevent double-resumption
+            // Vision framework completion handlers are serialized, but we use a lock for safety
+            let lock = NSLock()
             var hasResumed = false
             
             // Create Core ML Vision request
             let request = VNCoreMLRequest(model: visionModel) { request, error in
+                lock.lock()
+                defer { lock.unlock() }
+                
                 guard !hasResumed else { return }
                 hasResumed = true
                 
@@ -98,6 +104,9 @@ class FastViTService {
             do {
                 try handler.perform([request])
             } catch {
+                lock.lock()
+                defer { lock.unlock() }
+                
                 guard !hasResumed else { return }
                 hasResumed = true
                 continuation.resume(throwing: error)
