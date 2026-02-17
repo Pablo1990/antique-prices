@@ -4,14 +4,14 @@ import CoreML
 
 class AssessmentService: ObservableObject {
     
-    /// Analyze image using Vision framework to generate search keywords
+    /// Analyze image using FastViT or Vision framework to generate search keywords
     /// Returns suggestions for category and keywords, but does NOT fetch any data
     func analyzeImage(_ image: UIImage) async throws -> ImageAnalysisResult {
         guard let cgImage = image.cgImage else {
             throw AssessmentError.imageProcessingFailed
         }
         
-        // Try to use Vision framework to classify the image
+        // Try to use FastViT for more reliable object detection
         var suggestedCategory = "antigüedad"
         var keywords: [String] = []
         var eraKeywords: [String] = []
@@ -20,7 +20,16 @@ class AssessmentService: ObservableObject {
         var suggestedRarity: ConditionAssessment.RarityLevel = .uncommon
         
         do {
-            let observations = try await performImageClassification(cgImage: cgImage)
+            // First, try FastViT for more reliable object recognition
+            let observations: [VNClassificationObservation]
+            
+            if FastViTService.shared.isModelAvailable {
+                print("✓ Using FastViT for object classification")
+                observations = try await FastViTService.shared.classifyImage(image)
+            } else {
+                print("ℹ️ FastViT not available, falling back to Vision framework")
+                observations = try await performImageClassification(cgImage: cgImage)
+            }
             
             // Extract top classifications to build search query
             let topClassifications = observations.prefix(10)
@@ -97,12 +106,12 @@ class AssessmentService: ObservableObject {
             eraKeywords = ["antiguo", "vintage", "colección"]
             
         } catch {
-            // Vision framework classification failed - try fallback analysis
+            // Classification failed - try fallback analysis
             #if targetEnvironment(simulator)
-            print("ℹ️ Vision framework classification limited on simulator: \(error.localizedDescription)")
+            print("ℹ️ Image classification limited on simulator: \(error.localizedDescription)")
             print("ℹ️ Attempting basic image analysis fallback...")
             #else
-            print("ERROR: Vision framework classification failed: \(error.localizedDescription)")
+            print("ERROR: Image classification failed: \(error.localizedDescription)")
             print("Attempting fallback image analysis...")
             #endif
             

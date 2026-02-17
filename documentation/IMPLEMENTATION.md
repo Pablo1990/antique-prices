@@ -82,8 +82,23 @@ For detailed information about the web scraping implementation, see [SCRAPING_IM
 
 ## Machine Learning Capabilities
 
-### Vision Framework ✅
-The app uses Apple's Vision framework for:
+### FastViT Integration ✅
+The app uses **FastViT T8 F16** (Fast Vision Transformer) for reliable object recognition:
+- State-of-the-art vision transformer optimized for mobile
+- Float16 precision for efficiency
+- 224x224 input images
+- Provides accurate object classifications with confidence scores
+- Primary classifier for identifying antique objects
+
+**Implementation:**
+- `FastViTService` class handles model loading and inference
+- Graceful fallback to Vision framework if model not available
+- Model file: `FastViTT8F16.mlpackage` in `MLModels/` directory
+- Async/await for non-blocking processing
+- Top-N predictions with adaptive confidence thresholding
+
+### Vision Framework (Fallback) ✅
+The app uses Apple's Vision framework as a fallback when FastViT is not available:
 - Object detection and recognition
 - Image classification with VNClassifyImageRequest
 - Feature extraction
