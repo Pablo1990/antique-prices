@@ -20,6 +20,7 @@
 		AA000001000000000000002D /* ConditionScoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000002E /* ConditionScoringView.swift */; };
 		AA000001000000000000002F /* UserProvidedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000030 /* UserProvidedData.swift */; };
 		AA0000010000000000000031 /* ImageAnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000032 /* ImageAnalysisResult.swift */; };
+		AA0000010000000000000033 /* FastViTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000034 /* FastViTService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		AA000001000000000000002E /* ConditionScoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionScoringView.swift; sourceTree = "<group>"; };
 		AA0000010000000000000030 /* UserProvidedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProvidedData.swift; sourceTree = "<group>"; };
 		AA0000010000000000000032 /* ImageAnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnalysisResult.swift; sourceTree = "<group>"; };
+		AA0000010000000000000034 /* FastViTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastViTService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				AA000001000000000000002E /* ConditionScoringView.swift */,
 				AA000001000000000000001A /* Models */,
 				AA000001000000000000001B /* Services */,
+				AA0000010000000000000035 /* MLModels */,
 				AA0000010000000000000006 /* Assets.xcassets */,
 				AA000001000000000000001C /* Localization */,
 			);
@@ -101,8 +104,16 @@
 			isa = PBXGroup;
 			children = (
 				AA000001000000000000000A /* AssessmentService.swift */,
+				AA0000010000000000000034 /* FastViTService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		AA0000010000000000000035 /* MLModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MLModels;
 			sourceTree = "<group>";
 		};
 		AA000001000000000000001C /* Localization */ = {
@@ -194,6 +205,7 @@
 				AA000001000000000000002D /* ConditionScoringView.swift in Sources */,
 				AA000001000000000000002F /* UserProvidedData.swift in Sources */,
 				AA0000010000000000000031 /* ImageAnalysisResult.swift in Sources */,
+				AA0000010000000000000033 /* FastViTService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
