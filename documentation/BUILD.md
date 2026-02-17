@@ -257,7 +257,7 @@ For release builds:
 ## Need Help? / ¿Necesitas Ayuda?
 
 - Check [IMPLEMENTATION.md](IMPLEMENTATION.md) for technical details
-- Read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines
+- Read [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines
 - Open an issue on GitHub
 - Join discussions on GitHub
 

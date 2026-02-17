@@ -190,10 +190,10 @@ Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICEN
 ## 📚 Technical Documentation / Documentación Técnica
 
 For detailed technical information, see:
-- [LEGAL_COMPLIANCE.md](LEGAL_COMPLIANCE.md) - **IMPORTANT**: Legal architecture and compliance details
-- [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation status and technical details
-- [BUILD.md](BUILD.md) - Build and setup instructions
-- [API_INTEGRATION.md](API_INTEGRATION.md) - Integration examples and patterns
+- [LEGAL_COMPLIANCE.md](documentation/LEGAL_COMPLIANCE.md) - **IMPORTANT**: Legal architecture and compliance details
+- [IMPLEMENTATION.md](documentation/IMPLEMENTATION.md) - Implementation status and technical details
+- [BUILD.md](documentation/BUILD.md) - Build and setup instructions
+- [API_INTEGRATION.md](documentation/API_INTEGRATION.md) - Integration examples and patterns
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
 
 **Note**: The scraping implementation has been removed for legal compliance. See LEGAL_COMPLIANCE.md for the new human-in-the-loop architecture.
