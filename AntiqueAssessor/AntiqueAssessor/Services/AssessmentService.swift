@@ -202,7 +202,7 @@ class AssessmentService: ObservableObject {
             var detectedFeatures: [String] = []
             
             // Try to detect any recognizable features using simpler Vision requests
-            let request = VNDetectFaceLandmarksRequest { request, error in
+            _ = VNDetectFaceLandmarksRequest { request, error in
                 // This is just to trigger some basic processing
                 // Most antiques won't have faces, but the Vision framework initializes
             }
