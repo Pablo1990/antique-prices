@@ -8,7 +8,7 @@ A completely free, open-source iOS app to faithfully assess antiques that can be
 
 ### Español
 - 📸 **Captura de Fotos**: Toma fotos de antigüedades directamente desde la aplicación
-- 🧠 **Análisis con IA**: Usa Vision framework y Core ML de Apple para identificar categorías y sugerir palabras clave
+- 🧠 **Análisis con IA**: Usa FastViT (Vision Transformer) y Vision framework de Apple para identificación precisa de objetos
 - 🌐 **Navegación Asistida**: Abre Safari con búsquedas sugeridas en todocoleccion.net para que explores manualmente
 - 💰 **Entrada Manual de Precios**: Tú ingresas los precios que observas después de investigar el mercado
 - ⭐ **Evaluación de Condición**: Evalúa la condición, restauración, autenticidad y rareza de tu artículo
@@ -20,7 +20,7 @@ A completely free, open-source iOS app to faithfully assess antiques that can be
 
 ### English
 - 📸 **Photo Capture**: Take photos of antiques directly from the app
-- 🧠 **AI Analysis**: Uses Apple's Vision framework and Core ML to identify categories and suggest keywords
+- 🧠 **AI Analysis**: Uses FastViT (Vision Transformer) and Apple's Vision framework for precise object identification
 - 🌐 **Assisted Browsing**: Opens Safari with suggested searches on todocoleccion.net for you to browse manually
 - 💰 **Manual Price Entry**: You enter the prices you observe after researching the market
 - ⭐ **Condition Assessment**: Rate the condition, restoration, authenticity, and rarity of your item
@@ -57,7 +57,15 @@ cd antique-prices
 open AntiqueAssessor/AntiqueAssessor.xcodeproj
 ```
 
-3. Build and run the app / Compila y ejecuta la aplicación:
+3. **(Optional) Add FastViT Model** / **(Opcional) Agregar Modelo FastViT**:
+   - For improved object recognition, add the FastViT model file
+   - Download or obtain `FastViTT8F16.mlpackage`
+   - Place it in `AntiqueAssessor/AntiqueAssessor/MLModels/`
+   - Drag the file into Xcode's MLModels group
+   - See `MLModels/README.md` for detailed instructions
+   - **Note**: The app works without the model (uses Vision framework fallback)
+
+4. Build and run the app / Compila y ejecuta la aplicación:
    - Select your target device or simulator
    - Press `Cmd + R` to build and run
 
@@ -71,7 +79,7 @@ La aplicación requiere acceso a la cámara para tomar fotos de antigüedades. L
 
 ### Español
 1. **Toma una Foto**: Usa la cámara integrada para capturar una imagen de tu antigüedad
-2. **Analiza con IA**: La app usa Vision y Core ML para sugerir categorías y palabras clave de búsqueda
+2. **Analiza con IA**: La app usa FastViT (Vision Transformer) y Vision framework para identificación precisa de objetos y generación de palabras clave de búsqueda
 3. **Explora el Mercado**: Safari se abre con una búsqueda sugerida en todocoleccion.net - tú navegas manualmente
 4. **Ingresa Precios**: Después de investigar, ingresa los precios mínimo, mediano y máximo que observaste
 5. **Evalúa Condición**: Responde preguntas sobre condición, restauración, autenticidad y rareza
@@ -84,7 +92,7 @@ La aplicación requiere acceso a la cámara para tomar fotos de antigüedades. L
 
 ### English
 1. **Take a Photo**: Use the built-in camera to capture an image of your antique
-2. **AI Analysis**: The app uses Vision and Core ML to suggest categories and search keywords
+2. **AI Analysis**: The app uses FastViT (Vision Transformer) and Vision framework for precise object identification and search keyword generation
 3. **Browse Market**: Safari opens with a suggested search on todocoleccion.net - you browse manually
 4. **Enter Prices**: After researching, enter the minimum, median, and maximum prices you observed
 5. **Rate Condition**: Answer questions about condition, restoration, authenticity, and rarity
