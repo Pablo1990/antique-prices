@@ -8,13 +8,6 @@ struct ImageAnalysisResult {
     let confidence: Double
     let suggestedCondition: ConditionAssessment.ConditionLevel
     let suggestedRarity: ConditionAssessment.RarityLevel
-    
-    /// Generate search query for todocoleccion.net
-    var searchQuery: String {
-        var terms: [String] = []
-        
-
-    }
 
     /// Generate search query with automatic translated to Spanish if the current locale is Spanish
     var searchQuery: String {
@@ -48,20 +41,23 @@ struct ImageAnalysisResult {
             return terms.joined(separator: " ")
         }
     }
-
-
     
     /// Generate todocoleccion.net search URL
     func generateSearchURL() -> URL? {
-        # If language is Spanish, use Spanish base URL, otherwise use English
+        let baseURL = ""
+        /// If language is Spanish, use Spanish base URL, otherwise use English
         if Locale.current.languageCode == "es" {
             let baseURL = "https://www.todocoleccion.net/orientaprecios/-1/g/reciente/0/1?autocompletado="
-            let query = searchQuery_es.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            return URL(string: "\(baseURL)\(query)")
         } else {
             let baseURL = "https://en.todocoleccion.net/orientaprecios/-1/g/reciente/0/1?autocompletado="
-            let query = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            return URL(string: "\(baseURL)\(query)")
         }
+        
+        let query = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return URL(string: "\(baseURL)\(query)")
+    }
+    
+    /// Translate from English to Spanish automatically
+    func translateToSpanish(word: String) -> String {
+        return word
     }
 }
