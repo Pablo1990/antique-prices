@@ -16,15 +16,15 @@ struct ImageAnalysisResult {
         if Locale.current.languageCode == "es" {
 
             // Add category (translate to Spanish)
-            let category_es = translateToSpanish(suggestedCategory)
+            let category_es = translateToSpanish(word: suggestedCategory)
             terms.append(category_es)
 
             // Add era/style keywords (translate to Spanish)
-            let eraStyleKeywords_es = eraStyleKeywords.map { translateToSpanish($0) }
+            let eraStyleKeywords_es = eraStyleKeywords.map { translateToSpanish(word: $0) }
             terms.append(contentsOf: eraStyleKeywords_es)
 
             // Add other keywords (limit to top 2, translate to Spanish)
-            let suggestedKeywords_es = suggestedKeywords.prefix(2).map { translateToSpanish($0) }
+            let suggestedKeywords_es = suggestedKeywords.prefix(2).map { translateToSpanish(word: $0) }
             terms.append(contentsOf: suggestedKeywords_es)
 
             return terms.joined(separator: " ")
