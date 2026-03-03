@@ -8,22 +8,18 @@ struct ImageAnalysisResult {
     let confidence: Double
     let suggestedCondition: ConditionAssessment.ConditionLevel
     let suggestedRarity: ConditionAssessment.RarityLevel
+    /// Pre-translated Spanish keywords produced by TranslationService.
+    /// Empty when translation was not performed (e.g. non-Spanish locale or iOS < 17.4).
+    let translatedKeywords: [String]
 
-    /// Generate search query with automatic translated to Spanish if the current locale is Spanish
+    /// Generate search query, using pre-translated Spanish keywords when available.
     var searchQuery: String {
-        var terms: [String] = []
-
         if Locale.current.languageCode == "es" {
-            // Add other keywords (limit to top 2, translate to Spanish)
-            let suggestedKeywords_es = suggestedKeywords.prefix(2).map { translateToSpanish(word: $0) }
-            terms.append(contentsOf: suggestedKeywords_es)
-
-            return terms.joined(separator: " ")
+            // Use the async-translated keywords if available; otherwise fall back to originals.
+            let terms = translatedKeywords.isEmpty ? suggestedKeywords : translatedKeywords
+            return terms.prefix(2).joined(separator: " ")
         } else {
-            // Add other keywords (limit to top 2)
-            terms.append(contentsOf: suggestedKeywords.prefix(2))
-
-            return terms.joined(separator: " ")
+            return suggestedKeywords.prefix(2).joined(separator: " ")
         }
     }
     
@@ -37,10 +33,5 @@ struct ImageAnalysisResult {
         
         let query = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return URL(string: "\(baseURL)\(query)")
-    }
-    
-    /// Translate from English to Spanish automatically
-    func translateToSpanish(word: String) -> String {
-        return word
     }
 }
