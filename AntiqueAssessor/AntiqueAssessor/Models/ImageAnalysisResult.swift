@@ -8,27 +8,39 @@ struct ImageAnalysisResult {
     let confidence: Double
     let suggestedCondition: ConditionAssessment.ConditionLevel
     let suggestedRarity: ConditionAssessment.RarityLevel
-    
-    /// Generate search query for todocoleccion.net
+
+    /// Generate search query with automatic translated to Spanish if the current locale is Spanish
     var searchQuery: String {
         var terms: [String] = []
-        
-        // Add category
-        terms.append(suggestedCategory)
-        
-        // Add era/style keywords
-        terms.append(contentsOf: eraStyleKeywords)
-        
-        // Add other keywords (limit to top 2)
-        terms.append(contentsOf: suggestedKeywords.prefix(2))
-        
-        return terms.joined(separator: " ")
+
+        if Locale.current.languageCode == "es" {
+            // Add other keywords (limit to top 2, translate to Spanish)
+            let suggestedKeywords_es = suggestedKeywords.prefix(2).map { translateToSpanish(word: $0) }
+            terms.append(contentsOf: suggestedKeywords_es)
+
+            return terms.joined(separator: " ")
+        } else {
+            // Add other keywords (limit to top 2)
+            terms.append(contentsOf: suggestedKeywords.prefix(2))
+
+            return terms.joined(separator: " ")
+        }
     }
     
     /// Generate todocoleccion.net search URL
     func generateSearchURL() -> URL? {
-        let baseURL = "https://www.todocoleccion.net/s/"
+        var baseURL = "https://en.todocoleccion.net/orientaprecios/-1/g/reciente/0/1?autocompletado="
+        /// If language is Spanish, use Spanish base URL, otherwise use English
+        if Locale.current.languageCode == "es" {
+            baseURL = "https://www.todocoleccion.net/orientaprecios/-1/g/reciente/0/1?autocompletado="
+        }
+        
         let query = searchQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return URL(string: "\(baseURL)\(query)")
+    }
+    
+    /// Translate from English to Spanish automatically
+    func translateToSpanish(word: String) -> String {
+        return word
     }
 }

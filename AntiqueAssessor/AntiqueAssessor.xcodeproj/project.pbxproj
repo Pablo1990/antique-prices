@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47C684742F44C0C600B67BB4 /* FastViTT8F16.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 47C684732F44C0C600B67BB4 /* FastViTT8F16.mlpackage */; };
 		AA0000010000000000000001 /* AntiqueAssessorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000002 /* AntiqueAssessorApp.swift */; };
 		AA0000010000000000000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000004 /* ContentView.swift */; };
 		AA0000010000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000006 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47C684732F44C0C600B67BB4 /* FastViTT8F16.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = FastViTT8F16.mlpackage; sourceTree = "<group>"; };
 		AA0000010000000000000002 /* AntiqueAssessorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntiqueAssessorApp.swift; sourceTree = "<group>"; };
 		AA0000010000000000000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AA0000010000000000000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,19 +111,20 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		AA0000010000000000000035 /* MLModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MLModels;
-			sourceTree = "<group>";
-		};
 		AA000001000000000000001C /* Localization */ = {
 			isa = PBXGroup;
 			children = (
 				AA0000010000000000000010 /* Localizable.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		AA0000010000000000000035 /* MLModels */ = {
+			isa = PBXGroup;
+			children = (
+				47C684732F44C0C600B67BB4 /* FastViTT8F16.mlpackage */,
+			);
+			path = MLModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +208,7 @@
 				AA000001000000000000002D /* ConditionScoringView.swift in Sources */,
 				AA000001000000000000002F /* UserProvidedData.swift in Sources */,
 				AA0000010000000000000031 /* ImageAnalysisResult.swift in Sources */,
+				47C684742F44C0C600B67BB4 /* FastViTT8F16.mlpackage in Sources */,
 				AA0000010000000000000033 /* FastViTService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
