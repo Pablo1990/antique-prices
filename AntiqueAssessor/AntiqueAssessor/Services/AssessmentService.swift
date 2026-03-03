@@ -145,13 +145,22 @@ class AssessmentService: ObservableObject {
         // Remove duplicates and limit keywords
         keywords = Array(Set(keywords)).prefix(5).map { $0 }
         
+        // Translate keywords to Spanish when running in a Spanish locale (iOS 17.4+).
+        var translatedKeywords: [String] = []
+        if Locale.current.languageCode == "es" {
+            if #available(iOS 17.4, *) {
+                translatedKeywords = await TranslationService.translateToSpanish(keywords)
+            }
+        }
+        
         return ImageAnalysisResult(
             suggestedCategory: suggestedCategory,
             suggestedKeywords: keywords,
             eraStyleKeywords: eraKeywords,
             confidence: confidence,
             suggestedCondition: suggestedCondition,
-            suggestedRarity: suggestedRarity
+            suggestedRarity: suggestedRarity,
+            translatedKeywords: translatedKeywords
         )
     }
     
