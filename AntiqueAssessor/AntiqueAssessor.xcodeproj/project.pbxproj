@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4779E3492F570BD20074CBEA /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779E3482F570BD20074CBEA /* TranslationService.swift */; };
 		47C684742F44C0C600B67BB4 /* FastViTT8F16.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 47C684732F44C0C600B67BB4 /* FastViTT8F16.mlpackage */; };
 		AA0000010000000000000001 /* AntiqueAssessorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000002 /* AntiqueAssessorApp.swift */; };
 		AA0000010000000000000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000004 /* ContentView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4779E3482F570BD20074CBEA /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		47C684732F44C0C600B67BB4 /* FastViTT8F16.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = FastViTT8F16.mlpackage; sourceTree = "<group>"; };
 		AA0000010000000000000002 /* AntiqueAssessorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntiqueAssessorApp.swift; sourceTree = "<group>"; };
 		AA0000010000000000000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				AA000001000000000000000A /* AssessmentService.swift */,
 				AA0000010000000000000034 /* FastViTService.swift */,
+				4779E3482F570BD20074CBEA /* TranslationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				AA0000010000000000000007 /* CameraView.swift in Sources */,
 				AA0000010000000000000009 /* AssessmentService.swift in Sources */,
 				AA000001000000000000000B /* AntiqueItem.swift in Sources */,
+				4779E3492F570BD20074CBEA /* TranslationService.swift in Sources */,
 				AA000001000000000000000D /* ResultsView.swift in Sources */,
 				AA0000010000000000000029 /* SafariView.swift in Sources */,
 				AA000001000000000000002B /* PriceInputView.swift in Sources */,
