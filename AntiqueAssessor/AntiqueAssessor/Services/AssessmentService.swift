@@ -148,7 +148,7 @@ class AssessmentService: ObservableObject {
         // Translate keywords to Spanish when running in a Spanish locale (iOS 17.4+).
         var translatedKeywords: [String] = []
         if Locale.current.languageCode == "es" {
-            if #available(iOS 17.4, *) {
+            if #available(iOS 18.0, *) {
                 translatedKeywords = await TranslationService.translateToSpanish(keywords)
             }
         }
