@@ -179,6 +179,24 @@ Contributions are welcome! / ¡Las contribuciones son bienvenidas!
 - [ ] Comparison mode for multiple items
 - [ ] Enhanced image quality preprocessing
 
+## 📚 Documentation / Documentación
+
+### English
+- **[BUILD.md](BUILD.md)** - Complete build and setup guide
+- **[PUBLISHING.md](PUBLISHING.md)** - ⭐ iOS App Store publishing guide (local testing + App Store submission)
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Technical implementation details
+- **[API_INTEGRATION.md](API_INTEGRATION.md)** - Integration with TodoColección.net
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Project overview
+
+### Español
+- **[BUILD.md](BUILD.md)** - Guía completa de compilación y configuración
+- **[PUBLISHING.md](PUBLISHING.md)** - ⭐ Guía de publicación en iOS App Store (pruebas locales + envío al App Store)
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Directrices para contribuidores
+- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Detalles de implementación técnica
+- **[API_INTEGRATION.md](API_INTEGRATION.md)** - Integración con TodoColección.net
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Resumen del proyecto
+
 ## 📄 License / Licencia
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
